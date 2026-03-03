@@ -3,7 +3,7 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 1 / 65]
 
-# PostgreSQL for the Absolute Beginner
+## PostgreSQL for the Absolute Beginner
 <br>
 <br>
 ## Hour 1 of PostgreSQL Training Day
@@ -14,7 +14,7 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 2 / 65]
 
-# About This Training
+## About This Training
 
 - Full day PostgreSQL training
 - 6 hours with 90 minute lunch break
@@ -26,7 +26,7 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 3 / 65]
 
-# Today's Agenda
+## Today's Agenda
 
 | Hour | Topic |
 |------|-------|
@@ -42,7 +42,7 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 4 / 65]
 
-# Training Materials
+## Training Materials
 
 [.column]
 
@@ -63,7 +63,7 @@ Sample database:
 [.background-color: #8B4513]
 [.footer: Slide 5 / 65]
 
-# Let's Get Connected!
+## Let's Get Connected!
 
 ## Setup Overview
 
@@ -79,7 +79,7 @@ Sample database:
 [.background-color: #8B4513]
 [.footer: Slide 6 / 65]
 
-# Prerequisites
+## Prerequisites
 
 You need **Docker Desktop** installed and running
 
@@ -98,13 +98,13 @@ docker compose version
 [.background-color: #8B4513]
 [.footer: Slide 7 / 65]
 
-# Step 1: Clone the Repository
+## Step 1: Clone the Repository
 
 ```bash
-# Clone the training repo
+## Clone the training repo
 git clone https://github.com/Snowflake-Labs/postgres-full-day-training.git
 
-# Navigate into the folder
+## Navigate into the folder
 cd postgres-full-day-training
 ```
 
@@ -115,13 +115,13 @@ Or download as ZIP from GitHub if you don't have git.
 [.background-color: #8B4513]
 [.footer: Slide 8 / 65]
 
-# Step 2: Start PostgreSQL
+## Step 2: Start PostgreSQL
 
 ```bash
-# Start PostgreSQL container
+## Start PostgreSQL container
 docker compose up -d
 
-# Verify it's running
+## Verify it's running
 docker ps
 ```
 
@@ -137,28 +137,28 @@ abc123...      postgis/postgis:18-3.6   Up 10 seconds  0.0.0.0:5432->5432/tcp
 [.background-color: #006400]
 [.footer: Slide 9 / 65]
 
-# Step 3: Install a psql Client
+## Step 3: Install a psql Client
 
 You need a way to connect to PostgreSQL. Choose one:
 
 [.column]
 
-### Mac
+Mac
 - `brew install libpq` (client only)
 - `brew install postgresql@18`
 - Postgres.app (includes psql)
 
-### Windows
+Windows
 - PostgreSQL installer (postgresql.org)
 - pgAdmin (standalone)
 
 [.column]
 
-### Linux
+Linux
 - `apt install postgresql-client`
 - `yum install postgresql`
 
-### Cross-Platform GUIs
+Cross-Platform GUIs
 - pgAdmin
 - DBeaver
 - TablePlus
@@ -170,17 +170,17 @@ You need a way to connect to PostgreSQL. Choose one:
 [.background-color: #006400]
 [.footer: Slide 10 / 65]
 
-# Mac: Homebrew (Recommended)
+## Mac: Homebrew (Recommended)
 
 ```bash
-# Install just the client tools (no server)
+## Install just the client tools (no server)
 brew install libpq
 
-# Add to your PATH
+## Add to your PATH
 echo 'export PATH="/opt/homebrew/opt/libpq/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
 
-# Verify
+## Verify
 psql --version
 ```
 
@@ -191,7 +191,7 @@ Alternative: Install Postgres.app and use its bundled psql.
 [.background-color: #006400]
 [.footer: Slide 11 / 65]
 
-# Windows / GUI Users
+## Windows / GUI Users
 
 **pgAdmin** is a great option:
 
@@ -209,10 +209,10 @@ pgAdmin includes a Query Tool that works like psql.
 [.background-color: #006400]
 [.footer: Slide 12 / 65]
 
-# Step 4: Connect to PostgreSQL
+## Step 4: Connect to PostgreSQL
 
 ```bash
-# Connect using psql
+## Connect using psql
 psql postgresql://postgres:training@localhost:5432/postgres
 ```
 
@@ -232,7 +232,7 @@ You're connected! 🎉
 [.background-color: #006400]
 [.footer: Slide 13 / 65]
 
-# Step 5: Create Database and Load Bluebox
+## Step 5: Create Database and Load Bluebox
 
 From psql, create the database:
 
@@ -245,12 +245,12 @@ CREATE EXTENSION postgis;
 Then exit psql (`\q`) and load the data:
 
 ```bash
-# Download Bluebox files
+## Download Bluebox files
 curl -LO https://raw.githubusercontent.com/ryanbooz/bluebox/main/bluebox_schema.sql
 curl -LO https://raw.githubusercontent.com/ryanbooz/bluebox/main/bluebox_data.sql.gz
 gunzip bluebox_data.sql.gz
 
-# Load schema and data
+## Load schema and data
 psql postgresql://postgres:training@localhost:5432/bluebox -f bluebox_schema.sql
 psql postgresql://postgres:training@localhost:5432/bluebox -f bluebox_data.sql
 ```
@@ -260,7 +260,7 @@ psql postgresql://postgres:training@localhost:5432/bluebox -f bluebox_data.sql
 [.background-color: #006400]
 [.footer: Slide 14 / 65]
 
-# Step 6: Verify Your Setup
+## Step 6: Verify Your Setup
 
 Connect to the bluebox database:
 
@@ -287,12 +287,12 @@ If you see 7836 films, you're all set! ✅
 [.background-color: #006400]
 [.footer: Slide 15 / 65]
 
-# Troubleshooting: Last Resort
+## Troubleshooting: Last Resort
 
 If you can't install psql locally, use Docker:
 
 ```bash
-# Connect via docker exec
+## Connect via docker exec
 docker exec -it postgres-training psql -U postgres -d bluebox
 ```
 
@@ -308,7 +308,7 @@ This works but isn't ideal for learning psql workflows.
 [.background-color: #2F4F4F]
 [.footer: Slide 16 / 65]
 
-# Why Postgres?
+## Why Postgres?
 
 [.column]
 
@@ -328,7 +328,7 @@ This works but isn't ideal for learning psql workflows.
 [.background-color: #8B4513]
 [.footer: Slide 17 / 65]
 
-# Running Postgres
+## Running Postgres
 
 ## Where can you run Postgres?
 
@@ -337,7 +337,7 @@ This works but isn't ideal for learning psql workflows.
 [.background-color: #8B4513]
 [.footer: Slide 18 / 65]
 
-# Running Postgres - Options
+## Running Postgres - Options
 
 [.column]
 
@@ -360,13 +360,13 @@ This works but isn't ideal for learning psql workflows.
 [.background-color: #191970]
 [.footer: Slide 19 / 65]
 
-# Connecting to PostgreSQL
+## Connecting to PostgreSQL
 
 ```bash
-# Basic connection
+## Basic connection
 psql -h localhost -p 5432 -U postgres -d bluebox
 
-# Connection string format (what we've been using)
+## Connection string format (what we've been using)
 psql postgresql://postgres:training@localhost:5432/bluebox
 ```
 
@@ -379,7 +379,7 @@ Connection to remote locations
 [.background-color: #191970]
 [.footer: Slide 20 / 65]
 
-# GUI Tools
+## GUI Tools
 
 [.column]
 
@@ -402,14 +402,14 @@ Connection to remote locations
 [.background-color: #191970]
 [.footer: Slide 21 / 65]
 
-# psql Introduction
+## psql Introduction
 
 ---
 
 [.background-color: #191970]
 [.footer: Slide 22 / 65]
 
-# psql - The Postgres CLI
+## psql - The Postgres CLI
 
 The most powerful way to interact with Postgres
 
@@ -425,7 +425,7 @@ bluebox=#
 [.background-color: #191970]
 [.footer: Slide 23 / 65]
 
-# Essential psql Commands
+## Essential psql Commands
 
 | Command | Description |
 |---------|-------------|
@@ -442,7 +442,7 @@ bluebox=#
 [.background-color: #191970]
 [.footer: Slide 24 / 65]
 
-# More psql Commands
+## More psql Commands
 
 | Command | Description |
 |---------|-------------|
@@ -457,7 +457,7 @@ bluebox=#
 [.background-color: #191970]
 [.footer: Slide 25 / 65]
 
-# psql Tips
+## psql Tips
 
 ```sql
 -- Edit in your favorite editor
@@ -480,7 +480,7 @@ SELECT * FROM film;
 [.background-color: #191970]
 [.footer: Slide 26 / 65]
 
-# psql Formatting
+## psql Formatting
 
 Default output can be messy when columns are wide:
 
@@ -498,7 +498,7 @@ Default output can be messy when columns are wide:
 [.background-color: #191970]
 [.footer: Slide 27 / 65]
 
-# Expanded Display: \x auto
+## Expanded Display: \x auto
 
 ```sql
 \x auto   -- Let psql decide (recommended!)
@@ -522,7 +522,7 @@ email | alice@test.com
 [.background-color: #191970]
 [.footer: Slide 28 / 65]
 
-# Pretty Unicode Borders
+## Pretty Unicode Borders
 
 ```sql
 \pset linestyle unicode
@@ -545,7 +545,7 @@ Makes output much easier to read!
 [.background-color: #191970]
 [.footer: Slide 29 / 65]
 
-# More Useful psql Settings
+## More Useful psql Settings
 
 ```sql
 \timing              -- Show query execution time
@@ -573,7 +573,7 @@ on host "localhost" at port "5432".
 [.background-color: #191970]
 [.footer: Slide 30 / 65]
 
-# Making NULLs Visible
+## Making NULLs Visible
 
 By default, NULL displays as blank - easy to confuse with empty string!
 
@@ -597,14 +597,14 @@ Now you can clearly see which values are actually NULL!
 [.background-color: #800020]
 [.footer: Slide 31 / 65]
 
-# Users and Permissions
+## Users and Permissions
 
 ---
 
 [.background-color: #800020]
 [.footer: Slide 32 / 65]
 
-# Postgres Roles
+## Postgres Roles
 
 In Postgres, **users** and **groups** are both **roles**
 
@@ -621,7 +621,7 @@ CREATE ROLE readonly;
 [.background-color: #800020]
 [.footer: Slide 33 / 65]
 
-# Role Attributes
+## Role Attributes
 
 ```sql
 CREATE ROLE app_user WITH 
@@ -642,7 +642,7 @@ Common attributes:
 [.background-color: #800020]
 [.footer: Slide 34 / 65]
 
-# ⚠️ Password Security: Don't Do This!
+## ⚠️ Password Security: Don't Do This!
 
 ```sql
 -- This works, BUT the password may be logged in plaintext!
@@ -666,7 +666,7 @@ Enter it again: ********
 [.background-color: #800020]
 [.footer: Slide 35 / 65]
 
-# Password Hashing in Postgres
+## Password Hashing in Postgres
 
 Postgres uses **SCRAM-SHA-256** (since v10):
 
@@ -681,7 +681,7 @@ Hashed passwords are stored in `pg_authid.rolpassword`
 [.background-color: #800020]
 [.footer: Slide 36 / 65]
 
-# Password Best Practices
+## Password Best Practices
 
 ✅ **Use `\password`** to create/change passwords (pre-hashes)
 
@@ -703,7 +703,7 @@ WHERE rolpassword LIKE 'md5%';
 [.background-color: #800020]
 [.footer: Slide 37 / 65]
 
-# Granting Privileges
+## Granting Privileges
 
 ```sql
 -- Grant connection to database
@@ -724,7 +724,7 @@ GRANT SELECT, INSERT, UPDATE ON bluebox.rental TO app_user;
 [.background-color: #800020]
 [.footer: Slide 38 / 65]
 
-# Manage Privileges with Groups
+## Manage Privileges with Groups
 
 Roles can be members of other roles (like groups!)
 
@@ -743,7 +743,7 @@ GRANT SELECT ON ALL TABLES IN SCHEMA bluebox TO data_analytics;
 [.background-color: #800020]
 [.footer: Slide 39 / 65]
 
-# Grant Users Role Membership
+## Grant Users Role Membership
 
 ```sql
 -- Create a user for an analyst
@@ -761,7 +761,7 @@ GRANT data_analytics TO maria;
 [.background-color: #800020]
 [.footer: Slide 40 / 65]
 
-# View Role Memberships
+## View Role Memberships
 
 ```sql
 \du
@@ -784,7 +784,7 @@ Maria is a member of `data_analytics` - she inherits its permissions!
 [.background-color: #CC5500]
 [.footer: Slide 41 / 65]
 
-# Schemas
+## Schemas
 
 ![inline](diagrams/instance-cluster-schema.png)
 
@@ -793,7 +793,7 @@ Maria is a member of `data_analytics` - she inherits its permissions!
 [.background-color: #CC5500]
 [.footer: Slide 42 / 65]
 
-# What is a Schema?
+## What is a Schema?
 
 A **schema** is a namespace within a database
 
@@ -806,7 +806,7 @@ A **schema** is a namespace within a database
 [.background-color: #CC5500]
 [.footer: Slide 43 / 65]
 
-# Default Schema
+## Default Schema
 
 ```sql
 -- The default schema is 'public'
@@ -821,7 +821,7 @@ CREATE TABLE public.my_table (id int);
 [.background-color: #CC5500]
 [.footer: Slide 44 / 65]
 
-# Creating Schemas
+## Creating Schemas
 
 ```sql
 -- Bluebox already has its schema, but you could create more:
@@ -838,7 +838,7 @@ Bluebox uses `bluebox` schema to organize all its tables
 [.background-color: #CC5500]
 [.footer: Slide 45 / 65]
 
-# Schema Search Path
+## Schema Search Path
 
 ```sql
 -- View current search path
@@ -857,7 +857,7 @@ SELECT * FROM film;  -- Same as bluebox.film
 [.background-color: #CC5500]
 [.footer: Slide 46 / 65]
 
-# Bluebox Schema
+## Bluebox Schema
 
 The Bluebox database uses a `bluebox` schema with 17 tables:
 
@@ -881,7 +881,7 @@ SET search_path TO bluebox, public;
 [.background-color: #CC5500]
 [.footer: Slide 47 / 65]
 
-# ALTER User Search Path
+## ALTER User Search Path
 
 ```sql
 -- Set search path
@@ -896,14 +896,14 @@ SELECT * FROM film;  -- Same as bluebox.film
 [.background-color: #008080]
 [.footer: Slide 48 / 65]
 
-# Object and Data Types
+## Object and Data Types
 
 ---
 
 [.background-color: #008080]
 [.footer: Slide 49 / 65]
 
-# Database Objects
+## Database Objects
 
 - **Tables** - Store data in rows and columns
 - **Views** - Saved queries that act like tables
@@ -916,28 +916,28 @@ SELECT * FROM film;  -- Same as bluebox.film
 [.background-color: #008080]
 [.footer: Slide 50 / 65]
 
-# Common Data Types
+## Common Data Types
 
 [.column]
 
-### Numeric
+Numeric
 - `INTEGER` / `BIGINT`
 - `NUMERIC(p,s)`
 - `REAL` / `DOUBLE`
 
-### Character
+Character
 - `TEXT` (preferred)
 - `VARCHAR(n)`
 
 [.column]
 
-### Date/Time
+Date/Time
 - `DATE` / `TIME`
 - `TIMESTAMP`
 - `TIMESTAMPTZ` ⭐
 - `INTERVAL`
 
-### Other
+Other
 - `BOOLEAN`
 - `UUID`
 - `JSON` / `JSONB`
@@ -948,7 +948,7 @@ SELECT * FROM film;  -- Same as bluebox.film
 [.background-color: #008080]
 [.footer: Slide 51 / 65]
 
-# ⏰ Time: Use TIMESTAMPTZ!
+## ⏰ Time: Use TIMESTAMPTZ!
 
 `TIMESTAMP` vs `TIMESTAMPTZ` - always prefer **TIMESTAMPTZ**
 
@@ -972,7 +972,7 @@ TIMESTAMPTZ handles daylight saving automatically!
 [.background-color: #008080]
 [.footer: Slide 52 / 65]
 
-# 💰 Money: Use NUMERIC, Not MONEY!
+## 💰 Use NUMERIC, Not MONEY!
 
 ```sql
 -- DON'T use the MONEY type
@@ -1003,7 +1003,7 @@ NUMERIC stores exact values - no floating point errors!
 [.background-color: #008080]
 [.footer: Slide 53 / 65]
 
-# 🎯 Custom Data Types: ENUM
+## 🎯 Custom Data Types: ENUM
 
 Postgres lets you create custom types!
 
@@ -1032,7 +1032,7 @@ WHERE rating = 'PG-13' LIMIT 3;
 [.background-color: #008080]
 [.footer: Slide 54 / 65]
 
-# Creating a Table
+## Creating a Table
 
 Let's add a customer reviews feature to Bluebox!
 
@@ -1052,7 +1052,7 @@ CREATE TABLE bluebox.customer_review (
 [.background-color: #008080]
 [.footer: Slide 55 / 65]
 
-# Add Yourself as a Customer
+## Add Yourself as a Customer
 
 ```sql
 -- Add yourself to the Bluebox database
@@ -1080,7 +1080,7 @@ Note: this is a great use of the Postgres feature `RETURNING`
 [.background-color: #008080]
 [.footer: Slide 56 / 65]
 
-# Find Films to Review
+## Find Films to Review
 
 ```sql
 -- Find some popular films to review
@@ -1103,7 +1103,7 @@ WHERE title IN ('The Dark Knight', 'Inception',
 [.background-color: #008080]
 [.footer: Slide 57 / 65]
 
-# Insert Your Reviews
+## Insert Your Reviews
 
 Replace `205026` with your actual customer_id!
 
@@ -1123,7 +1123,7 @@ VALUES
 [.background-color: #008080]
 [.footer: Slide 58 / 65]
 
-# Querying Your Reviews
+## Querying Your Reviews
 
 ```sql
 -- See your reviews with a JOIN
@@ -1148,7 +1148,7 @@ ORDER BY r.created_at DESC;
 [.background-color: #008080]
 [.footer: Slide 59 / 65]
 
-# Bluebox Tables
+## Bluebox Tables
 
 ```sql
 \d bluebox.film
@@ -1172,14 +1172,14 @@ ORDER BY r.created_at DESC;
 [.background-color: #556B2F]
 [.footer: Slide 60 / 65]
 
-# Extensions
+## Extensions
 
 ---
 
 [.background-color: #556B2F]
 [.footer: Slide 61 / 65]
 
-# What are Extensions?
+## What are Extensions?
 
 Extensions add functionality to Postgres:
 
@@ -1193,7 +1193,7 @@ Extensions add functionality to Postgres:
 [.background-color: #556B2F]
 [.footer: Slide 62 / 65]
 
-# Contrib Extensions
+## Contrib Extensions
 
 Bundled with Postgres - just `CREATE EXTENSION name;`
 
@@ -1215,7 +1215,7 @@ Bundled with Postgres - just `CREATE EXTENSION name;`
 [.background-color: #556B2F]
 [.footer: Slide 63 / 65]
 
-# Popular Third-Party Extensions
+## Popular Third-Party Extensions
 
 - **PostGIS** - Geospatial data and queries
 - **pgvector** - Vector similarity search (AI/ML)
@@ -1228,7 +1228,7 @@ Bundled with Postgres - just `CREATE EXTENSION name;`
 [.background-color: #336791]
 [.footer: Slide 64 / 65]
 
-# Hour 1 Summary
+## Hour 1 Summary
 
 - ✅ Setup: Docker, psql client, Bluebox loaded
 - ✅ Why Postgres is a great choice
@@ -1244,7 +1244,7 @@ Bundled with Postgres - just `CREATE EXTENSION name;`
 [.background-color: #336791]
 [.footer: Slide 65 / 65]
 
-# Questions?
+## Questions?
 
 <br>
 <br>

@@ -3,10 +3,10 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 1 / 59]
 
-# Getting Started with SQL in Postgres
+## Getting Started with SQL in Postgres
 <br>
 <br>
-## Hour 2 of PostgreSQL Training Day
+### Hour 2 of PostgreSQL Training Day
 ### SCaLE LA 2026
 
 ---
@@ -14,7 +14,7 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 2 / 59]
 
-# Hour 2 Topics
+## Hour 2 Topics
 
 [.column]
 
@@ -39,7 +39,7 @@ autoscale: true
 [.background-color: #8B4513]
 [.footer: Slide 3 / 59]
 
-# What is CRUD?
+## What is CRUD?
 
 **C**reate - `INSERT` new rows
 **R**ead - `SELECT` existing data
@@ -53,7 +53,7 @@ These four operations cover nearly all data manipulation (DML)!
 [.background-color: #8B4513]
 [.footer: Slide 4 / 59]
 
-# SELECT - Reading Data
+## SELECT - Reading Data
 
 ```sql
 SELECT title, release_date, vote_average
@@ -78,7 +78,7 @@ LIMIT 5;
 [.background-color: #8B4513]
 [.footer: Slide 5 / 59]
 
-# What are Aggregates?
+## What are Aggregates?
 
 Functions that combine multiple rows into a single result
 
@@ -99,7 +99,7 @@ Use with `GROUP BY` to aggregate per group
 [.background-color: #8B4513]
 [.footer: Slide 6 / 59]
 
-# SELECT with Aggregates
+## SELECT with Aggregates
 
 ```sql
 SELECT 
@@ -128,7 +128,7 @@ ORDER BY release_year DESC LIMIT 5;
 [.background-color: #8B4513]
 [.footer: Slide 7 / 59]
 
-# INSERT - Creating Data
+## INSERT - Creating Data
 
 ```sql
 INSERT INTO bluebox.customer (
@@ -146,7 +146,7 @@ VALUES (
 [.background-color: #8B4513]
 [.footer: Slide 8 / 59]
 
-# INSERT - What Happens Without Required Fields?
+## INSERT - What Happens Without Required Fields?
 
 ```sql
 -- This looks simpler, but will it work?
@@ -166,7 +166,7 @@ The table has constraints that protect data integrity!
 [.background-color: #8B4513]
 [.footer: Slide 9 / 59]
 
-# Constraints Protect Your Data
+## Constraints Protect Your Data
 
 Bluebox `customer` table constraints:
 
@@ -184,7 +184,7 @@ Constraints catch bad data at the database level — not in app code!
 [.background-color: #8B4513]
 [.footer: Slide 10 / 59]
 
-# UPDATE - Modifying Data
+## UPDATE - Modifying Data
 
 ```sql
 -- Update with conditions
@@ -204,7 +204,7 @@ WHERE film_id = 550;
 [.background-color: #8B4513]
 [.footer: Slide 11 / 59]
 
-# DELETE - Removing Data
+## DELETE - Removing Data
 
 ```sql
 -- This works! payment has no child tables referencing it
@@ -230,7 +230,7 @@ DETAIL: Key (film_id)=(1472668) is referenced from table "inventory".
 [.background-color: #8B4513]
 [.footer: Slide 12 / 59]
 
-# DELETE - Working with Constraints
+## DELETE - Working with Constraints
 
 ```sql
 -- Option 1: Delete the referencing rows first
@@ -253,7 +253,7 @@ DELETE FROM bluebox.film WHERE film_id = 1472668;
 [.background-color: #8B4513]
 [.footer: Slide 13 / 59]
 
-# Constraints
+## Constraints
 
 Rules that enforce data integrity at the database level
 
@@ -273,7 +273,7 @@ Rules that enforce data integrity at the database level
 [.background-color: #8B4513]
 [.footer: Slide 14 / 59]
 
-# Constraints: WITHOUT OVERLAPS (new PG 18)
+#### Constraints: WITHOUT OVERLAPS (new PG 18)
 
 Prevent double-bookings with temporal constraints:
 
@@ -307,7 +307,7 @@ No more double-booked rentals!
 [.background-color: #2F4F4F]
 [.footer: Slide 15 / 59]
 
-# RETURNING Clause
+## RETURNING Clause
 
 Get data back from INSERT, UPDATE, or DELETE!
 
@@ -328,7 +328,7 @@ RETURNING customer_id, create_date;
 [.background-color: #2F4F4F]
 [.footer: Slide 16 / 59]
 
-# RETURNING OLD/NEW (PG 18)
+## RETURNING OLD/NEW (PG 18)
 
 See both before and after values in one statement!
 
@@ -352,7 +352,7 @@ No more separate SELECT to see what changed!
 [.background-color: #2F4F4F]
 [.footer: Slide 17 / 59]
 
-# UPSERT with ON CONFLICT
+## UPSERT with ON CONFLICT
 
 Insert or update if row already exists:
 
@@ -379,7 +379,7 @@ DO UPDATE SET
 [.background-color: #006400]
 [.footer: Slide 19 / 59]
 
-# INNER JOIN
+## INNER JOIN
 
 Returns only matching rows from both tables
 
@@ -405,7 +405,7 @@ LIMIT 3;
 [.background-color: #006400]
 [.footer: Slide 20 / 59]
 
-# LEFT JOIN
+## LEFT JOIN
 
 Returns all rows from left table, matching from right (NULLs if no match)
 
@@ -434,7 +434,7 @@ ORDER BY cast_count DESC LIMIT 5;
 [.background-color: #006400]
 [.footer: Slide 21 / 59]
 
-# RIGHT JOIN
+## RIGHT JOIN
 
 Returns all rows from right table, matching from left, with NULL for any missing matches.
 
@@ -454,7 +454,7 @@ GROUP BY f.film_id, f.title;
 [.background-color: #006400]
 [.footer: Slide 22 / 59]
 
-# FULL OUTER JOIN
+## FULL OUTER JOIN
 
 Returns all rows from both tables (NULLs on both sides if no match)
 
@@ -477,7 +477,7 @@ LIMIT 5;
 [.background-color: #006400]
 [.footer: Slide 23 / 59]
 
-# Multiple JOINs
+## Multiple JOINs
 
 Chain JOINs to connect normalized data across several tables
 
@@ -507,14 +507,14 @@ LIMIT 5;
 [.background-color: #191970]
 [.footer: Slide 24 / 59]
 
-# Arrays and JSON
+## Arrays and JSON
 
 ---
 
 [.background-color: #191970]
 [.footer: Slide 25 / 59]
 
-# Arrays in PostgreSQL
+## Arrays in PostgreSQL
 
 Bluebox stores genre IDs as an array on each film:
 
@@ -543,7 +543,7 @@ Drama (18), Action (28), Crime (80), Thriller (53)
 [.background-color: #191970]
 [.footer: Slide 26 / 59]
 
-# Adding to an Array
+## Adding to an Array
 
 ```sql
 -- Add a genre to a film's array
@@ -562,7 +562,7 @@ WHERE film_id = 155;
 [.background-color: #191970]
 [.footer: Slide 27 / 59]
 
-# Array Operators
+## Array Operators
 
 | Operator | Meaning | Example |
 |----------|---------|---------|
@@ -578,7 +578,7 @@ WHERE film_id = 155;
 [.background-color: #191970]
 [.footer: Slide 28 / 59]
 
-# Querying Arrays
+## Querying Arrays
 
 ```sql
 -- Find Action films
@@ -609,7 +609,7 @@ WHERE f.title = 'The Dark Knight';
 [.background-color: #191970]
 [.footer: Slide 29 / 59]
 
-# JSON vs JSONB
+## JSON vs JSONB
 
 | Feature | JSON | JSONB |
 |---------|------|-------|
@@ -627,7 +627,9 @@ WHERE f.title = 'The Dark Knight';
 [.background-color: #191970]
 [.footer: Slide 30 / 59]
 
-# Working with JSONB
+## Working with JSONB
+
+[.column]
 
 ```sql
 -- Create table with JSONB
@@ -643,6 +645,9 @@ VALUES (1, '{
     "budget": 160000000,
     "awards": ["Oscar", "BAFTA"]
 }');
+
+
+[.column]
 
 -- Different row, completely different structure - that's OK!
 INSERT INTO movie_metadata (movie_id, data)
@@ -660,7 +665,7 @@ No schema enforcement - each row can have different structures!
 [.background-color: #191970]
 [.footer: Slide 31 / 59]
 
-# JSONB Operators
+## JSONB Operators
 
 | Operator | Meaning | Example |
 |----------|---------|---------|
@@ -677,7 +682,7 @@ No schema enforcement - each row can have different structures!
 [.background-color: #191970]
 [.footer: Slide 32 / 59]
 
-# Querying JSONB
+## Querying JSONB
 
 ```sql
 -- Extract value as text (most common)
@@ -702,7 +707,7 @@ WHERE data @> '{"director": "Christopher Nolan"}';
 [.background-color: #800020]
 [.footer: Slide 33 / 59]
 
-# Window Functions
+## Window Functions
 
 Perform calculations across related rows **without grouping**
 
@@ -726,7 +731,7 @@ Key difference from GROUP BY: window functions keep all rows!
 [.background-color: #800020]
 [.footer: Slide 35 / 59]
 
-# Running Totals
+## Running Totals
 
 ```sql
 SELECT 
@@ -753,7 +758,7 @@ ORDER BY payment_date;
 [.background-color: #800020]
 [.footer: Slide 36 / 59]
 
-# LAG - Compare to Previous Row
+## LAG - Compare to Previous Row
 
 ```sql
 SELECT 
@@ -779,7 +784,7 @@ ORDER BY payment_date;
 [.background-color: #800020]
 [.footer: Slide 37 / 59]
 
-# LEAD - Look Ahead
+## LEAD - Look Ahead
 
 ```sql
 SELECT 
@@ -800,7 +805,7 @@ LIMIT 5;
 [.footer: Slide 38 / 59]
 
 
-# CTEs - Common Table Expressions
+## CTEs - Common Table Expressions
 
 - Improve readability
 - Can be referenced multiple times
@@ -819,7 +824,7 @@ LIMIT 5;
 [.background-color: #CC5500]
 [.footer: Slide 40 / 59]
 
-# CTE: Calculate Once, Use Multiple Times
+## CTE: Calculate Once, Use Multiple Times
 
 ```sql
 WITH customer_totals AS (
@@ -852,7 +857,7 @@ The CTE `customer_totals` is referenced **3 times** - that's the power!
 [.background-color: #CC5500]
 [.footer: Slide 41 / 59]
 
-# Multiple CTEs
+## Multiple CTEs
 
 Build up logic step-by-step: aggregate → filter → select
 
@@ -889,7 +894,7 @@ SELECT * FROM top_years;
 [.background-color: #556B2F]
 [.footer: Slide 42 / 59]
 
-# What is PL/pgSQL?
+## What is PL/pgSQL?
 
 PostgreSQL's procedural language
 
@@ -903,7 +908,7 @@ PostgreSQL's procedural language
 [.background-color: #556B2F]
 [.footer: Slide 43 / 59]
 
-# Real-World Function: Return a Rental
+## Real-World Function: Return a Rental
 
 ```sql
 CREATE OR REPLACE FUNCTION return_rental(p_rental_id BIGINT)
@@ -940,7 +945,7 @@ $$ LANGUAGE plpgsql;
 [.background-color: #556B2F]
 [.footer: Slide 44 / 59]
 
-# Using the Function
+## Using the Function
 
 ```sql
 -- Pass in a rental_id to check
@@ -965,14 +970,14 @@ This pattern is common for business logic that needs to:
 [.background-color: #4B0082]
 [.footer: Slide 45 / 59]
 
-# 🔍 Text Search in Postgres
+## 🔍 Text Search in Postgres
 
 ---
 
 [.background-color: #4B0082]
 [.footer: Slide 46 / 59]
 
-# Three Ways to Search Text
+## Three Ways to Search Text
 
 | Method | Use Case | Speed | Setup |
 |--------|----------|-------|-------|
@@ -986,7 +991,7 @@ This pattern is common for business logic that needs to:
 [.background-color: #4B0082]
 [.footer: Slide 47 / 59]
 
-# Method 1a: Pattern Matching with ILIKE
+## Method 1a: Pattern Matching with ILIKE
 
 ```sql
 -- Find all Spider-Man movies (case-insensitive)
@@ -1009,7 +1014,7 @@ WHERE title ILIKE '%spider%';
 [.background-color: #4B0082]
 [.footer: Slide 48 / 59]
 
-# Method 1b: Pattern Matching with regex
+## Method 1b: Pattern Matching with regex
 
 ```sql
 -- Find all Spider-Man movies (case-insensitive)
@@ -1034,7 +1039,7 @@ WHERE title ~* 'spider-man';
 [.background-color: #4B0082]
 [.footer: Slide 49 / 59]
 
-# Method 2: Full-Text Search
+## Method 2: Full-Text Search
 
 Understands language - **stems words** to find related forms
 
@@ -1059,7 +1064,7 @@ WHERE fulltext @@ to_tsquery('english', 'running');
 [.background-color: #4B0082]
 [.footer: Slide 50 / 59]
 
-# Full-Text Search Operators
+## Full-Text Search Operators
 
 | Operator | Meaning | Example |
 |----------|---------|---------|
@@ -1079,7 +1084,7 @@ WHERE fulltext @@ plainto_tsquery('dark knight batman');
 [.background-color: #4B0082]
 [.footer: Slide 51 / 59]
 
-# How Bluebox fulltext Column Works
+## How Bluebox fulltext Column Works
 
 Auto-generates tsvector from title + overview:
 
@@ -1100,7 +1105,7 @@ CREATE INDEX film_fulltext_idx ON film USING gin(fulltext);
 [.background-color: #4B0082]
 [.footer: Slide 52 / 59]
 
-# Method 3: Vector Search (Semantic)
+## Method 3: Vector Search (Semantic)
 
 Find similar *meaning*, not just matching words
 
@@ -1122,7 +1127,7 @@ Real embeddings have 384-1536 dimensions from AI models
 [.background-color: #4B0082]
 [.footer: Slide 53 / 59]
 
-# Vector Search: Sample Data
+## Vector Search: Sample Data
 
 XXX - this is sort of duplicated from the earlier slide; probably fine, but wanted to mention
 ```sql
@@ -1141,7 +1146,7 @@ INSERT INTO movie_vectors VALUES
 [.background-color: #4B0082]
 [.footer: Slide 54 / 59]
 
-# Vector Search: Finding Similar Movies
+## Vector Search: Finding Similar Movies
 
 ```sql
 -- Find movies similar to "The Dark Knight"
@@ -1167,7 +1172,7 @@ LIMIT 3;
 [.background-color: #4B0082]
 [.footer: Slide 55 / 59]
 
-# Vector Search: The Big Picture
+## Vector Search: The Big Picture
 
 **The workflow:**
 
@@ -1188,7 +1193,7 @@ LIMIT 3;
 [.background-color: #4B0082]
 [.footer: Slide 56 / 59]
 
-# Why Vector Search Matters
+## Why Vector Search Matters
 
 **Use cases:**
 
@@ -1205,7 +1210,7 @@ Great for AI/ML applications alongside your relational data
 [.background-color: #4B0082]
 [.footer: Slide 57 / 59]
 
-# When to Use Each Method
+## When to Use Each Method
 
 | Need | Method |
 |------|--------|
@@ -1222,7 +1227,7 @@ Combine them! Full-text for keywords, vectors for concepts
 [.background-color: #336791]
 [.footer: Slide 58 / 59]
 
-# Hour 2 Summary
+## Hour 2 Summary
 
 - ✅ CRUD operations (Create, Read, Update, Delete)
 - ✅ Postgres features: RETURNING, ON CONFLICT
@@ -1237,7 +1242,7 @@ Combine them! Full-text for keywords, vectors for concepts
 [.background-color: #336791]
 [.footer: Slide 59 / 59]
 
-# Questions?
+## Questions?
 
 <br>
 <br>

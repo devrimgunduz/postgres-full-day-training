@@ -1,20 +1,20 @@
 autoscale: true
 
 [.background-color: #336791]
-[.footer: Slide 1 / 64]
+[.footer: Slide 1 / 63]
 
-# Postgres Query Tuning
+## Postgres Query Tuning
 <br>
 <br>
-## Hour 6 of PostgreSQL Training Day
+### Hour 6 of PostgreSQL Training Day
 ### SCaLE LA 2026
 
 ---
 
 [.background-color: #336791]
-[.footer: Slide 2 / 64]
+[.footer: Slide 2 / 63]
 
-# Hour 6 Topics
+## Hour 6 Topics
 
 [.column]
 
@@ -36,16 +36,16 @@ autoscale: true
 ---
 
 [.background-color: #2F4F4F]
-[.footer: Slide 3 / 64]
+[.footer: Slide 3 / 63]
 
-# EXPLAIN - The Essential Tool
+## EXPLAIN - The Essential Tool
 
 ---
 
 [.background-color: #2F4F4F]
-[.footer: Slide 4 / 64]
+[.footer: Slide 4 / 63]
 
-# What is EXPLAIN?
+## What is EXPLAIN?
 
 Shows you the query execution plan
 
@@ -65,9 +65,9 @@ Output:
 ---
 
 [.background-color: #2F4F4F]
-[.footer: Slide 5 / 64]
+[.footer: Slide 5 / 63]
 
-# EXPLAIN Options
+## EXPLAIN Options
 
 ```sql
 -- Basic plan (estimated only)
@@ -87,9 +87,9 @@ SELECT * FROM bluebox.film WHERE vote_average > 8;
 ---
 
 [.background-color: #2F4F4F]
-[.footer: Slide 6 / 64]
+[.footer: Slide 6 / 63]
 
-# EXPLAIN Output Formats
+## EXPLAIN Output Formats
 
 ```sql
 -- Default text format
@@ -108,9 +108,9 @@ EXPLAIN (FORMAT XML) SELECT * FROM bluebox.film LIMIT 5;
 ---
 
 [.background-color: #2F4F4F]
-[.footer: Slide 7 / 64]
+[.footer: Slide 7 / 63]
 
-# EXPLAIN YAML Example
+## EXPLAIN YAML Example
 
 ```sql
 EXPLAIN (ANALYZE, FORMAT YAML) 
@@ -139,9 +139,9 @@ SELECT title, vote_average FROM bluebox.film WHERE vote_average > 8;
 ---
 
 [.background-color: #2F4F4F]
-[.footer: Slide 8 / 64]
+[.footer: Slide 8 / 63]
 
-# Reading Plan Costs
+## Reading Plan Costs
 
 ```
 Seq Scan on film  (cost=0.00..941.95 rows=110 width=777)
@@ -157,16 +157,22 @@ Seq Scan on film  (cost=0.00..941.95 rows=110 width=777)
 ---
 
 [.background-color: #2F4F4F]
-[.footer: Slide 9 / 64]
+[.footer: Slide 9 / 63]
 
-# EXPLAIN ANALYZE
+## EXPLAIN ANALYZE
+
+[.column]
 
 ![inline](diagrams/explain analyze.png)
+
+[.column]
+
 
 Shows **actual** execution:
 
 ```sql
-EXPLAIN ANALYZE SELECT * FROM bluebox.film WHERE vote_average > 8;
+EXPLAIN ANALYZE 
+SELECT * FROM bluebox.film WHERE vote_average > 8;
 ```
 
 Estimated 110 rows, got 111 — pretty close!
@@ -174,9 +180,9 @@ Estimated 110 rows, got 111 — pretty close!
 ---
 
 [.background-color: #2F4F4F]
-[.footer: Slide 10 / 64]
+[.footer: Slide 10 / 63]
 
-# Warning About EXPLAIN ANALYZE
+## Warning About EXPLAIN ANALYZE
 
 ⚠️ **EXPLAIN ANALYZE actually runs the query!**
 
@@ -193,9 +199,9 @@ ROLLBACK;
 ---
 
 [.background-color: #2F4F4F]
-[.footer: Slide 11 / 64]
+[.footer: Slide 11 / 63]
 
-# EXPLAIN with BUFFERS
+## EXPLAIN with BUFFERS
 
 ```sql
 EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM film WHERE vote_average > 8;
@@ -217,70 +223,95 @@ EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM film WHERE vote_average > 8;
 ---
 
 [.background-color: #8B4513]
-[.footer: Slide 12 / 64]
+[.footer: Slide 12 / 63]
 
-# Common Plan Operations
+[.column]
+
+## Common Plan Operations
+
+[.column]
 
 ![inline](diagrams/postgres-scan-types.png)
 
 ---
 
 [.background-color: #8B4513]
-[.footer: Slide 13 / 64]
+[.footer: Slide 13 / 63]
 
-# Sequential Scan
+[.column]
 
-![inline](diagrams/seq-scan.png)
+## Sequential Scan
 
 Reads every row in the table
 
 **Good when**: Small tables, selecting most rows, no useful index
 
+[.column]
+
+![inline](diagrams/seq-scan.png)
+
+
+
 ---
 
 [.background-color: #8B4513]
-[.footer: Slide 14 / 64]
+[.footer: Slide 14 / 63]
 
-# Index Scan
+[.column]
 
-![inline](diagrams/index-scan.png)
+## Index Scan
 
 Uses index to find rows, then fetches from table
 
 **Good when**: Selecting small percentage of rows, index matches conditions
 
+[.column]
+
+![inline](diagrams/index-scan.png)
+
+
 ---
 
 [.background-color: #8B4513]
-[.footer: Slide 15 / 64]
+[.footer: Slide 15 / 63]
 
-# Index Only Scan
+[.column]
 
-![inline](diagrams/index-only-scan.png)
+## Index Only Scan
 
 All needed data is in the index - no table access!
 
 **Best case** - requires index covering all columns + recent vacuum
 
+[.column]
+
+![inline](diagrams/index-only-scan.png)
+
+
 ---
 
 [.background-color: #8B4513]
-[.footer: Slide 16 / 64]
+[.footer: Slide 16 / 63]
 
-# Bitmap Scans
+[.column]
 
-![inline](diagrams/bitmap-index-scan.png)
+## Bitmap Scans
 
 Two-phase: Build bitmap of matching rows, then fetch in physical order
 
 **Good for**: Medium selectivity queries
 
+[.column]
+
+![inline](diagrams/bitmap-index-scan.png)
+
+
 ---
 
 [.background-color: #8B4513]
-[.footer: Slide 17 / 64]
+[.footer: Slide 17 / 63]
 
-# Join Operations - Nested Loop
+## Join Operations - Nested Loop
 
 ```sql
 EXPLAIN SELECT f.title, p.name FROM film f
@@ -302,18 +333,18 @@ Best for small result sets with good indexes!
 ---
 
 [.background-color: #8B4513]
-[.footer: Slide 18 / 64]
+[.footer: Slide 18 / 63]
 
-# Sort Operations
+## Sort Operations
 
 ![inline](diagrams/postgres-sorts-explain.png)
 
 ---
 
 [.background-color: #8B4513]
-[.footer: Slide 19 / 64]
+[.footer: Slide 19 / 63]
 
-# Sort Methods in EXPLAIN
+## Sort Methods in EXPLAIN
 
 ```
 Sort  (cost=1200.00..1250.00 rows=10000)
@@ -334,26 +365,26 @@ External merge = data exceeded work_mem
 ---
 
 [.background-color: #006400]
-[.footer: Slide 20 / 64]
+[.footer: Slide 20 / 63]
 
-# pg_stat_statements
+## pg\_stat\_statements
 
 ---
 
 [.background-color: #006400]
-[.footer: Slide 21 / 64]
+[.footer: Slide 21 / 63]
 
-# Finding Slow Queries
+## Finding Slow Queries
 
-pg_stat_statements collects query statistics
+pg\_stat\_statements collects query statistics
 
 ```sql
 -- Add to shared_preload_libraries
-ALTER SYSTEM SET shared_preload_libraries = 'pg_stat_statements';
+ALTER SYSTEM SET shared_preload_libraries = 'pg\_stat\_statements';
 ```
 
 ```bash
-# Restart container to load the extension
+## Restart container to load the extension
 docker compose down
 docker compose --profile dba up -d
 ```
@@ -366,11 +397,11 @@ CREATE EXTENSION pg_stat_statements;
 ---
 
 [.background-color: #006400]
-[.footer: Slide 22 / 64]
+[.footer: Slide 22 / 63]
 
-# Generate Some Query Activity
+## Generate Some Query Activity
 
-Run these queries to populate pg_stat_statements:
+Run these queries to populate pg\_stat\_statements:
 
 ```sql
 -- Some fast queries
@@ -394,9 +425,9 @@ SELECT title FROM bluebox.film ORDER BY popularity DESC LIMIT 20;
 ---
 
 [.background-color: #006400]
-[.footer: Slide 23 / 64]
+[.footer: Slide 23 / 63]
 
-# Top Queries by Total Time
+## Top Queries by Total Time
 
 ```sql
 SELECT 
@@ -414,9 +445,9 @@ LIMIT 10;
 ---
 
 [.background-color: #006400]
-[.footer: Slide 24 / 64]
+[.footer: Slide 24 / 63]
 
-# Top Queries by Average Time
+## Top Queries by Average Time
 
 ```sql
 SELECT 
@@ -433,9 +464,9 @@ LIMIT 10;
 ---
 
 [.background-color: #006400]
-[.footer: Slide 25 / 64]
+[.footer: Slide 25 / 63]
 
-# Queries with Most I/O
+## Queries with Most I/O
 
 ```sql
 SELECT 
@@ -453,9 +484,9 @@ LIMIT 10;
 ---
 
 [.background-color: #006400]
-[.footer: Slide 26 / 64]
+[.footer: Slide 26 / 63]
 
-# Reset Statistics
+## Reset Statistics
 
 ```sql
 -- Reset all stats (do periodically)
@@ -468,18 +499,18 @@ SELECT pg_stat_statements_reset();
 ---
 
 [.background-color: #006400]
-[.footer: Slide 27 / 64]
+[.footer: Slide 27 / 63]
 
-# auto_explain: Automatic Query Plans
+## auto_explain: Automatic Query Plans
 
 Logs EXPLAIN output for slow queries automatically - no manual EXPLAIN needed!
 
 ---
 
 [.background-color: #006400]
-[.footer: Slide 28 / 64]
+[.footer: Slide 28 / 63]
 
-# Setup: Make Sure Logging is Running
+## Setup: Make Sure Logging is Running
 
 If you haven't already from Hour 4, ensure logging is configured:
 
@@ -498,9 +529,9 @@ tail -f logs/postgresql.log
 ---
 
 [.background-color: #006400]
-[.footer: Slide 29 / 64]
+[.footer: Slide 29 / 63]
 
-# Enable auto_explain
+## Enable auto_explain
 
 ```sql
 -- Load the extension for this session
@@ -518,9 +549,9 @@ These are session-level settings - no restart needed!
 ---
 
 [.background-color: #006400]
-[.footer: Slide 30 / 64]
+[.footer: Slide 30 / 63]
 
-# Run a Slow Query
+## Run a Slow Query
 
 ```sql
 -- This should trigger auto_explain (takes > 100ms)
@@ -537,9 +568,9 @@ Watch your log tail window!
 ---
 
 [.background-color: #006400]
-[.footer: Slide 31 / 64]
+[.footer: Slide 31 / 63]
 
-# See the Plan in the Log
+## See the Plan in the Log
 
 Your log should show something like:
 
@@ -556,9 +587,9 @@ Sort  (cost=1234.56..1234.78 rows=100 width=40)
 ---
 
 [.background-color: #006400]
-[.footer: Slide 32 / 64]
+[.footer: Slide 32 / 63]
 
-# auto_explain Options
+## auto_explain Options
 
 | Setting | Purpose |
 |---------|---------|
@@ -572,16 +603,16 @@ For production, add to `shared_preload_libraries` and use `ALTER SYSTEM`.
 ---
 
 [.background-color: #191970]
-[.footer: Slide 33 / 64]
+[.footer: Slide 33 / 63]
 
 ![inline](diagrams/postgres-index-types.png)
 
 ---
 
 [.background-color: #191970]
-[.footer: Slide 34 / 64]
+[.footer: Slide 34 / 63]
 
-# B-Tree Index (Default)
+## B-Tree Index (Default)
 
 Best for: Equality, ranges, sorting, LIKE with prefix
 
@@ -596,9 +627,9 @@ SELECT title FROM bluebox.film WHERE vote_average > 8;
 ---
 
 [.background-color: #191970]
-[.footer: Slide 35 / 64]
+[.footer: Slide 35 / 63]
 
-# B-Tree Index: After
+## B-Tree Index: After
 
 ```sql
 -- Create the index
@@ -616,9 +647,9 @@ Cost dropped from ~942 to ~8!
 ---
 
 [.background-color: #191970]
-[.footer: Slide 36 / 64]
+[.footer: Slide 36 / 63]
 
-# GIN Index
+## GIN Index
 
 Generalized Inverted Index - for arrays, JSONB, full-text
 
@@ -634,9 +665,9 @@ WHERE to_tsvector('english', overview) @@ to_tsquery('hero');
 ---
 
 [.background-color: #191970]
-[.footer: Slide 37 / 64]
+[.footer: Slide 37 / 63]
 
-# GIN Index: After
+## GIN Index: After
 
 ```sql
 -- Create GIN index on the text vector
@@ -655,9 +686,9 @@ Full-text search becomes instant!
 ---
 
 [.background-color: #191970]
-[.footer: Slide 38 / 64]
+[.footer: Slide 38 / 63]
 
-# GiST Index
+## GiST Index
 
 Generalized Search Tree - for geometry, ranges, nearest-neighbor
 
@@ -674,9 +705,9 @@ WHERE ST_DWithin(geog,
 ---
 
 [.background-color: #191970]
-[.footer: Slide 39 / 64]
+[.footer: Slide 39 / 63]
 
-# GiST Index: After
+## GiST Index: After
 
 ```sql
 -- Create GiST index on geography column
@@ -695,9 +726,9 @@ Spatial queries go from scanning all rows to using the index!
 ---
 
 [.background-color: #191970]
-[.footer: Slide 40 / 64]
+[.footer: Slide 40 / 63]
 
-# Index Type Summary
+## Index Type Summary
 
 | Type | Use Case |
 |------|----------|
@@ -710,16 +741,16 @@ Spatial queries go from scanning all rows to using the index!
 ---
 
 [.background-color: #800020]
-[.footer: Slide 41 / 64]
+[.footer: Slide 41 / 63]
 
-# Index Strategies
+## Index Strategies
 
 ---
 
 [.background-color: #800020]
-[.footer: Slide 42 / 64]
+[.footer: Slide 42 / 63]
 
-# Composite Indexes
+## Composite Indexes
 
 ```sql
 -- Index on multiple columns
@@ -736,9 +767,9 @@ WHERE lower(rental_period) > '2024'                     ✗
 ---
 
 [.background-color: #800020]
-[.footer: Slide 43 / 64]
+[.footer: Slide 43 / 63]
 
-# Covering Indexes (INCLUDE)
+## Covering Indexes (INCLUDE)
 
 ```sql
 -- Include non-key columns for index-only scans
@@ -755,9 +786,9 @@ WHERE vote_average > 8;
 ---
 
 [.background-color: #800020]
-[.footer: Slide 44 / 64]
+[.footer: Slide 44 / 63]
 
-# Partial Indexes
+## Partial Indexes
 
 ```sql
 -- Index only rows you'll query (unreturned rentals)
@@ -775,9 +806,9 @@ WHERE upper(rental_period) IS NULL
 ---
 
 [.background-color: #800020]
-[.footer: Slide 45 / 64]
+[.footer: Slide 45 / 63]
 
-# Expression Indexes
+## Expression Indexes
 
 ```sql
 -- Index on expression result
@@ -796,9 +827,9 @@ WHERE (amount * 1.0825) > 10.00;
 ---
 
 [.background-color: #800020]
-[.footer: Slide 46 / 64]
+[.footer: Slide 46 / 63]
 
-# When NOT to Index
+## When NOT to Index
 
 - Small tables (seq scan is fine)
 - Columns rarely in WHERE/JOIN/ORDER BY
@@ -810,9 +841,9 @@ Every index has maintenance cost!
 ---
 
 [.background-color: #800020]
-[.footer: Slide 47 / 64]
+[.footer: Slide 47 / 63]
 
-# Finding Missing Indexes
+## Finding Missing Indexes
 
 ```sql
 -- Tables with high sequential scan ratio
@@ -829,9 +860,9 @@ LIMIT 10;
 ---
 
 [.background-color: #800020]
-[.footer: Slide 48 / 64]
+[.footer: Slide 48 / 63]
 
-# HypoPG - Test Indexes Without Creating
+## HypoPG - Test Indexes Without Creating
 
 Test index impact without actually creating them!
 
@@ -844,9 +875,9 @@ No disk space, no write overhead - just planning.
 ---
 
 [.background-color: #800020]
-[.footer: Slide 49 / 64]
+[.footer: Slide 49 / 63]
 
-# HypoPG Example: Before Index
+## HypoPG Example: Before Index
 
 ```sql
 -- First, check current plan
@@ -863,9 +894,9 @@ Sequential scan - reads entire table.
 ---
 
 [.background-color: #800020]
-[.footer: Slide 50 / 64]
+[.footer: Slide 50 / 63]
 
-# HypoPG Example: Create Hypothetical Index
+## HypoPG Example: Create Hypothetical Index
 
 ```sql
 -- Create a hypothetical index (no actual index created!)
@@ -883,9 +914,9 @@ SELECT * FROM hypopg_create_index(
 ---
 
 [.background-color: #800020]
-[.footer: Slide 51 / 64]
+[.footer: Slide 51 / 63]
 
-# HypoPG Example: Test With Hypothetical Index
+## HypoPG Example: Test With Hypothetical Index
 
 ```sql
 -- Now check the plan again
@@ -903,9 +934,9 @@ Cost dropped from 941 to 8 - index would help!
 ---
 
 [.background-color: #800020]
-[.footer: Slide 52 / 64]
+[.footer: Slide 52 / 63]
 
-# HypoPG Example: Composite Index
+## HypoPG Example: Composite Index
 
 ```sql
 -- Test a composite index
@@ -922,9 +953,9 @@ WHERE customer_id = 100
 ---
 
 [.background-color: #800020]
-[.footer: Slide 53 / 64]
+[.footer: Slide 53 / 63]
 
-# HypoPG: Cleanup and Compare
+## HypoPG: Cleanup and Compare
 
 ```sql
 -- List all hypothetical indexes
@@ -942,21 +973,21 @@ Great for testing index strategies before committing disk space!
 ---
 
 [.background-color: #CC5500]
-[.footer: Slide 54 / 64]
+[.footer: Slide 54 / 63]
 
-# Common Performance Patterns
+## Common Performance Patterns
 
 ---
 
 [.background-color: #CC5500]
-[.footer: Slide 55 / 64]
+[.footer: Slide 55 / 63]
 
-# Pattern: N+1 Queries
+## Pattern: N+1 Queries
 
 **Problem**: Loop making individual queries
 
 ```python
-# BAD: N+1 queries
+## BAD: N+1 queries
 for customer in get_customers():
     rentals = query(f"SELECT * FROM rental WHERE customer_id = {customer.id}")
 ```
@@ -973,9 +1004,9 @@ LEFT JOIN rental r ON c.customer_id = r.customer_id;
 ---
 
 [.background-color: #CC5500]
-[.footer: Slide 56 / 64]
+[.footer: Slide 56 / 63]
 
-# Pattern: SELECT *
+## Pattern: SELECT *
 
 **Problem**: Fetching unnecessary columns
 
@@ -996,9 +1027,9 @@ WHERE vote_average > 8;
 ---
 
 [.background-color: #CC5500]
-[.footer: Slide 57 / 64]
+[.footer: Slide 57 / 63]
 
-# Pattern: OFFSET for Pagination
+## Pattern: OFFSET for Pagination
 
 **Problem**: OFFSET scans and discards rows
 
@@ -1022,9 +1053,9 @@ LIMIT 20;
 ---
 
 [.background-color: #CC5500]
-[.footer: Slide 58 / 64]
+[.footer: Slide 58 / 63]
 
-# Pattern: Functions on Indexed Columns
+## Pattern: Functions on Indexed Columns
 
 **Problem**: Function prevents index use
 
@@ -1046,9 +1077,9 @@ WHERE payment_date >= '2024-01-15'
 ---
 
 [.background-color: #CC5500]
-[.footer: Slide 59 / 64]
+[.footer: Slide 59 / 63]
 
-# Pattern: OR Conditions
+## Pattern: OR Conditions
 
 **Problem**: OR can prevent index use
 
@@ -1070,12 +1101,12 @@ SELECT * FROM bluebox.film WHERE EXTRACT(year FROM release_date) = 2024;
 ---
 
 [.background-color: #336791]
-[.footer: Slide 61 / 64]
+[.footer: Slide 60 / 63]
 
-# Query Tuning Checklist
+## Query Tuning Checklist
 
 1. ✅ Use EXPLAIN (ANALYZE, BUFFERS) to understand plans
-2. ✅ Check pg_stat_statements for slow queries
+2. ✅ Check pg\_stat\_statements for slow queries
 3. ✅ Ensure appropriate indexes exist
 4. ✅ Look for sequential scans on large tables
 5. ✅ Watch for disk sorts (increase work_mem)
@@ -1085,9 +1116,9 @@ SELECT * FROM bluebox.film WHERE EXTRACT(year FROM release_date) = 2024;
 ---
 
 [.background-color: #336791]
-[.footer: Slide 62 / 64]
+[.footer: Slide 61 / 63]
 
-# Hour 6 Summary
+## Hour 6 Summary
 
 - ✅ EXPLAIN for understanding query plans
 - ✅ Reading costs, rows, and actual times
@@ -1100,9 +1131,9 @@ SELECT * FROM bluebox.film WHERE EXTRACT(year FROM release_date) = 2024;
 ---
 
 [.background-color: #336791]
-[.footer: Slide 63 / 64]
+[.footer: Slide 62 / 63]
 
-# Training Complete!
+## Training Complete!
 
 <br>
 
@@ -1115,9 +1146,9 @@ Questions? Find us at the PostgreSQL booth!
 ---
 
 [.background-color: #336791]
-[.footer: Slide 64 / 64]
+[.footer: Slide 63 / 63]
 
-# Additional Resources
+## Additional Resources
 
 - **PostgreSQL Documentation**: postgresql.org/docs
 - **Explain Visualizers**: explain.depesz.com, explain.dalibo.com

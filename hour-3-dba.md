@@ -3,10 +3,10 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 1 / 79]
 
-# Postgres DBA Basics
+## Postgres DBA Basics
 <br>
 <br>
-## Hour 3 of PostgreSQL Training Day
+### Hour 3 of PostgreSQL Training Day
 ### SCaLE LA 2026
 
 ---
@@ -14,7 +14,7 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 2 / 79]
 
-# Hour 3 Topics
+## Hour 3 Topics
 
 [.column]
 
@@ -41,14 +41,14 @@ autoscale: true
 [.background-color: #2F4F4F]
 [.footer: Slide 3 / 79]
 
-# Postgres Hosting Options
+## Postgres Hosting Options
 
 ---
 
 [.background-color: #2F4F4F]
 [.footer: Slide 4 / 79]
 
-# Where to Run Postgres
+## Where to Run Postgres
 
 [.column]
 
@@ -72,7 +72,7 @@ autoscale: true
 [.background-color: #2F4F4F]
 [.footer: Slide 5 / 79]
 
-# Self-Managed vs Managed
+## Self-Managed vs Managed
 
 | Aspect | Self-Managed | Managed |
 |--------|--------------|---------|
@@ -87,7 +87,7 @@ autoscale: true
 [.background-color: #2F4F4F]
 [.footer: Slide 6 / 79]
 
-# When to Choose Self-Managed
+## When to Choose Self-Managed
 
 - Need specific configurations
 - Cost optimization at scale
@@ -100,7 +100,7 @@ autoscale: true
 [.background-color: #2F4F4F]
 [.footer: Slide 7 / 79]
 
-# When to Choose Managed
+## When to Choose Managed
 
 - Small team / no DBA
 - Quick time to market
@@ -113,14 +113,14 @@ autoscale: true
 [.background-color: #8B4513]
 [.footer: Slide 8 / 79]
 
-# Backups
+## Backups
 
 ---
 
 [.background-color: #8B4513]
 [.footer: Slide 9 / 79]
 
-# Backup Strategy Fundamentals
+## Backup Strategy Fundamentals
 
 - **What** to backup: data, configs, WAL
 - **Where** to store: local, remote, cloud
@@ -132,7 +132,7 @@ autoscale: true
 [.background-color: #8B4513]
 [.footer: Slide 10 / 79]
 
-# Backup Choices
+## Backup Choices
 
 - Dump/restore - simple, but not automated, long restore times
 - Basebackup with added backups - more robust but self managed
@@ -143,16 +143,18 @@ autoscale: true
 [.background-color: #8B4513]
 [.footer: Slide 11 / 79]
 
-# pg_dump - Logical Backup
+## pg_dump - Logical Backup
+
+Note: must have PG 18 installed for this to work locally
 
 ```bash
-# Dump entire database (using connection string)
+## Dump entire database (using connection string)
 pg_dump postgresql://postgres:training@localhost:5432/bluebox > bluebox.sql
 
-# Dump in custom format (compressed, parallel restore)
+## Dump in custom format (compressed, parallel restore)
 pg_dump -Fc postgresql://postgres:training@localhost:5432/bluebox > bluebox.dump
 
-# Dump specific tables
+## Dump specific tables
 pg_dump -t 'bluebox.film' -t 'bluebox.rental' \
   postgresql://postgres:training@localhost:5432/bluebox > tables.sql
 ```
@@ -162,7 +164,7 @@ pg_dump -t 'bluebox.film' -t 'bluebox.rental' \
 [.background-color: #8B4513]
 [.footer: Slide 12 / 79]
 
-# pg_dump Options
+## pg_dump Options
 
 | Option | Description |
 |--------|-------------|
@@ -178,13 +180,13 @@ pg_dump -t 'bluebox.film' -t 'bluebox.rental' \
 [.background-color: #8B4513]
 [.footer: Slide 13 / 79]
 
-# pg_dumpall - All Databases
+## pg_dumpall - All Databases
 
 ```bash
-# Dump all databases including globals (roles, tablespaces)
+## Dump all databases including globals (roles, tablespaces)
 pg_dumpall -d postgresql://postgres:training@localhost:5432/postgres > full_cluster.sql
 
-# Globals only (roles, tablespaces)
+## Globals only (roles, tablespaces)
 pg_dumpall --globals-only -d postgresql://postgres:training@localhost:5432/postgres > globals.sql
 ```
 
@@ -193,16 +195,16 @@ pg_dumpall --globals-only -d postgresql://postgres:training@localhost:5432/postg
 [.background-color: #8B4513]
 [.footer: Slide 14 / 79]
 
-# pg_restore - Restoring Backups
+## pg_restore - Restoring Backups
 
 ```bash
-# Restore from custom format
+## Restore from custom format
 pg_restore -h localhost -U postgres -d bluebox_new bluebox.dump
 
-# Parallel restore
+## Parallel restore
 pg_restore -j 4 -h localhost -U postgres -d bluebox_new bluebox.dump
 
-# Restore specific table
+## Restore specific table
 pg_restore -t film -h localhost -U postgres -d bluebox_new bluebox.dump
 ```
 
@@ -211,7 +213,7 @@ pg_restore -t film -h localhost -U postgres -d bluebox_new bluebox.dump
 [.background-color: #8B4513]
 [.footer: Slide 15 / 79]
 
-# pg_basebackup - Physical Backup
+## pg_basebackup - Physical Backup
 
 Copies the entire database cluster at the file level.
 
@@ -234,16 +236,16 @@ Unlike pg_dump (logical), pg_basebackup:
 [.background-color: #8B4513]
 [.footer: Slide 17 / 79]
 
-# 🔧 Hands-On: pg_basebackup
+## 🔧 Hands-On: pg_basebackup
 
 Let's take a real backup in our Docker environment:
 
 ```bash
-# Create backup directory inside container
+## Create backup directory inside container
 docker exec postgres-training mkdir -p /backup
 
-# Take a full backup (plain format)
-# Backup goes to /backup/full INSIDE the container
+## Take a full backup (plain format)
+## Backup goes to /backup/full INSIDE the container
 docker exec postgres-training pg_basebackup \
   -U postgres \
   -D /backup/full \
@@ -259,7 +261,7 @@ Note: This backup is inside the container. In production, you'd mount an externa
 [.background-color: #8B4513]
 [.footer: Slide 18 / 79]
 
-# pg_basebackup Options
+## pg_basebackup Options
 
 | Option | Description |
 |--------|-------------|
@@ -276,17 +278,17 @@ Note: This backup is inside the container. In production, you'd mount an externa
 [.background-color: #8B4513]
 [.footer: Slide 19 / 79]
 
-# Inspect the Backup
+## Inspect the Backup
 
 ```bash
-# List backup contents
+## List backup contents
 docker exec postgres-training ls -la /backup/full/
 
-# You'll see the PostgreSQL data directory structure:
-# base/           - Table data files
-# global/         - Cluster-wide tables
-# pg_wal/         - WAL files included in backup
-# backup_manifest - Backup metadata (v13+)
+## You'll see the PostgreSQL data directory structure:
+## base/           - Table data files
+## global/         - Cluster-wide tables
+## pg_wal/         - WAL files included in backup
+## backup_manifest - Backup metadata (v13+)
 ```
 
 ---
@@ -294,10 +296,10 @@ docker exec postgres-training ls -la /backup/full/
 [.background-color: #8B4513]
 [.footer: Slide 20 / 79]
 
-# Verify the Backup Manifest
+## Verify the Backup Manifest
 
 ```bash
-# View the backup manifest (JSON)
+## View the backup manifest (JSON)
 docker exec postgres-training head -50 /backup/full/backup_manifest
 ```
 
@@ -317,7 +319,7 @@ The manifest lists every file with checksums for verification.
 [.background-color: #8B4513]
 [.footer: Slide 21 / 79]
 
-# Understanding WAL
+## Understanding WAL
 
 ## Write-Ahead Logging
 
@@ -326,7 +328,7 @@ The manifest lists every file with checksums for verification.
 [.background-color: #8B4513]
 [.footer: Slide 22 / 79]
 
-# What is WAL?
+## What is WAL?
 
 **Write-Ahead Logging** - PostgreSQL's durability mechanism
 
@@ -347,7 +349,7 @@ The manifest lists every file with checksums for verification.
 [.background-color: #8B4513]
 [.footer: Slide 24 / 79]
 
-# 🔧 Hands-On: View WAL
+## 🔧 Hands-On: View WAL
 
 ```sql
 -- Current WAL position (Log Sequence Number)
@@ -361,9 +363,9 @@ FROM pg_stat_wal;
 ```
 
 ```bash
-# List WAL files in the container
+## List WAL files in the container
 docker exec postgres-training ls -la \
-  /var/lib/postgresql/data/pg_wal/
+  /var/lib/postgresql/18/docker/pg_wal/
 ```
 
 ---
@@ -371,16 +373,12 @@ docker exec postgres-training ls -la \
 [.background-color: #8B4513]
 [.footer: Slide 25 / 79]
 
-# Why WAL Matters for Backups: Consistency
-
-WAL is required for data consistency!
+## Why WAL Matters for Backups: Consistency
 
 - changes are made to the database during the filesystem copy during pg_basebackup
 - without WAL, your copy will have files from before/after changes exist
 - no guarantees of consistency; database needs to recover to a known checkpoint
 - **a data directory copy without WAL generated during the dump IS NOT A BACKUP!**
-
-# Why WAL Matters for Backups: PITR
 
 WAL enables **Point-in-Time Recovery (PITR)**
 
@@ -397,7 +395,7 @@ Base Backup (Monday) + WAL files = Any point in time
 [.background-color: #8B4513]
 [.footer: Slide 26 / 79]
 
-# Backup Strategy Example
+## Backup Strategy Example
 
 **Small database (< 100 GB)**
 - Daily full backups with pg_dump
@@ -414,7 +412,7 @@ Base Backup (Monday) + WAL files = Any point in time
 [.background-color: #8B4513]
 [.footer: Slide 27 / 79]
 
-# Physical Backup Summary
+## Physical Backup Summary
 
 1. **pg_basebackup** - Takes full cluster copy
 2. **backup_manifest** - Tracks files and checksums
@@ -428,7 +426,7 @@ Base Backup (Monday) + WAL files = Any point in time
 [.background-color: #8B4513]
 [.footer: Slide 28 / 79]
 
-# Other Backup Tools
+## Other Backup Tools
 
 - **pgBackRest** - Parallel backup, retention policies, encryption
 - **Barman** - Backup and recovery manager
@@ -439,14 +437,12 @@ Base Backup (Monday) + WAL files = Any point in time
 [.background-color: #006400]
 [.footer: Slide 29 / 79]
 
-# Upgrades and Versions
+## Upgrades and Versions
 
 ---
 
 [.background-color: #006400]
 [.footer: Slide 30 / 79]
-
-# PostgreSQL Version Policy
 
 ![inline](diagrams/postgres versions 19.png)
 
@@ -455,7 +451,7 @@ Base Backup (Monday) + WAL files = Any point in time
 [.background-color: #006400]
 [.footer: Slide 31 / 79]
 
-# Current Support Status
+## Current Support Status
 
 | Version | First Release | End of Life |
 |---------|--------------|-------------|
@@ -470,15 +466,15 @@ Base Backup (Monday) + WAL files = Any point in time
 [.background-color: #006400]
 [.footer: Slide 32 / 79]
 
-# Minor Version Upgrades
+## Minor Version Upgrades
 
 Simple - just update packages and restart
 
 ```bash
-# Ubuntu/Debian
+## Ubuntu/Debian
 apt update && apt upgrade postgresql-18
 
-# Restart
+## Restart
 systemctl restart postgresql
 ```
 
@@ -491,23 +487,23 @@ systemctl restart postgresql
 [.background-color: #006400]
 [.footer: Slide 33 / 79]
 
-# 🔧 Minor Upgrade with Docker
+## 🔧 Minor Upgrade with Docker
 
 ```bash
-# Check current version
+## Check current version
 docker exec postgres-training psql -U postgres \
   -c "SELECT version();"
 
-# Stop containers
+## Stop containers
 docker compose down
 
-# Pull latest image (gets newest 18.x)
+## Pull latest image (gets newest 18.x)
 docker compose pull
 
-# Start with new image - data volume persists
+## Start with new image - data volume persists
 docker compose up -d
 
-# Verify new version
+## Verify new version
 docker exec postgres-training psql -U postgres \
   -c "SELECT version();"
 ```
@@ -517,7 +513,7 @@ docker exec postgres-training psql -U postgres \
 [.background-color: #006400]
 [.footer: Slide 34 / 79]
 
-# Major Version Upgrades - Options
+## Major Version Upgrades - Options
 
 1. **pg_dump/pg_restore** - Logical, works across versions
 2. **pg_upgrade** - In-place, faster for large databases
@@ -528,20 +524,20 @@ docker exec postgres-training psql -U postgres \
 [.background-color: #006400]
 [.footer: Slide 35 / 79]
 
-# pg_upgrade
+## pg_upgrade
 
 ```bash
-# Stop both clusters
+## Stop both clusters
 systemctl stop postgresql
 
-# Run pg_upgrade
+## Run pg_upgrade
 pg_upgrade \
   -b /usr/lib/postgresql/17/bin \
   -B /usr/lib/postgresql/18/bin \
   -d /var/lib/postgresql/17/main \
   -D /var/lib/postgresql/18/main
 
-# Start new cluster
+## Start new cluster
 systemctl start postgresql@18-main
 ```
 
@@ -550,7 +546,7 @@ systemctl start postgresql@18-main
 [.background-color: #006400]
 [.footer: Slide 36 / 79]
 
-# Pre-Upgrade Checklist
+## Pre-Upgrade Checklist
 
 - [ ] Test upgrade in non-production first
 - [ ] Review release notes for breaking changes
@@ -565,14 +561,14 @@ systemctl start postgresql@18-main
 [.background-color: #191970]
 [.footer: Slide 37 / 79]
 
-# DR & HA Concepts
+## DR & HA Concepts
 
 ---
 
 [.background-color: #191970]
 [.footer: Slide 38 / 79]
 
-# Key Terms
+## Key Terms
 
 - **RPO** - Recovery Point Objective (data loss tolerance)
 - **RTO** - Recovery Time Objective (downtime tolerance)
@@ -584,7 +580,7 @@ systemctl start postgresql@18-main
 [.background-color: #191970]
 [.footer: Slide 39 / 79]
 
-# Streaming Replication
+## Streaming Replication
 
 Primary server streams WAL to standby
 
@@ -594,13 +590,14 @@ Primary ──WAL Stream──> Standby (Hot Standby)
 
 - **Synchronous**: Zero data loss, higher latency
 - **Asynchronous**: Some data loss risk, lower latency
-- NOTE: server can be setup as Async for speed, but individual transactions can be sync for protection
+- server can be setup as Async for speed, but individual transactions can be sync for protection
+
 ---
 
 [.background-color: #191970]
 [.footer: Slide 40 / 79]
 
-# Setting Up Streaming Replication
+## Setting Up Streaming Replication
 
 Primary `postgresql.conf`:
 
@@ -622,7 +619,7 @@ hot_standby = on  # allows queries on the standby
 [.background-color: #191970]
 [.footer: Slide 41 / 79]
 
-# Failover Options
+## Failover Options
 
 [.column]
 
@@ -644,10 +641,10 @@ hot_standby = on  # allows queries on the standby
 [.background-color: #191970]
 [.footer: Slide 42 / 79]
 
-# Patroni - HA Solution
+## Patroni - HA Solution
 
 ```yaml
-# patroni.yml
+## patroni.yml
 scope: postgres-cluster
 name: node1
 
@@ -668,14 +665,14 @@ Hands-on Patroni is out of scope, but try the official demo:
 [.background-color: #800020]
 [.footer: Slide 43 / 79]
 
-# Logical Replication
+## Logical Replication
 
 ---
 
 [.background-color: #800020]
 [.footer: Slide 44 / 79]
 
-# What is Logical Replication?
+## What is Logical Replication?
 
 Replicates data changes at the logical level (SQL)
 
@@ -689,7 +686,7 @@ Unlike streaming replication:
 [.background-color: #800020]
 [.footer: Slide 45 / 79]
 
-# Logical Replication Use Cases
+## Logical Replication Use Cases
 
 - Zero-downtime major upgrades
 - Consolidating data from multiple sources
@@ -703,7 +700,7 @@ Unlike streaming replication:
 [.background-color: #800020]
 [.footer: Slide 46 / 79]
 
-# 🔧 Hands-On: Logical Replication
+## 🔧 Hands-On: Logical Replication
 
 First, enable the DBA profile if you haven't:
 
@@ -717,7 +714,7 @@ docker compose --profile dba up -d
 | postgres-subscriber | 5433 | Subscriber |
 
 ```bash
-# Verify both are running
+## Verify both are running
 docker ps | grep postgres
 ```
 
@@ -726,12 +723,14 @@ docker ps | grep postgres
 [.background-color: #800020]
 [.footer: Slide 47 / 79]
 
-# Step 1: Prepare the Subscriber
+## Step 1: Prepare the Subscriber
+
+[.column]
 
 Create matching database and table on subscriber:
 
 ```bash
-# Connect to subscriber (port 5433)
+## Connect to subscriber (port 5433)
 psql "postgresql://postgres:training@localhost:5433/postgres"
 ```
 
@@ -740,12 +739,34 @@ CREATE DATABASE bluebox;
 \c bluebox
 CREATE SCHEMA bluebox;
 
+-- Create custom mpaa_rating type
+CREATE TYPE mpaa_rating AS ENUM (
+    'G',
+    'PG',
+    'PG-13',
+    'R',
+    'NC-17',
+    'NR'
+);
+
+[.column]
+
 -- Create the table structure (no data)
 CREATE TABLE bluebox.film (
-    film_id integer PRIMARY KEY,
+    film_id bigint primary key,
     title text,
+    overview text,
     release_date date,
-    vote_average real
+    genre_ids integer[],
+    original_language text,
+    rating mpaa_rating,
+    popularity real,
+    vote_count integer,
+    vote_average real,
+    budget bigint,
+    revenue bigint,
+    runtime integer,
+    fulltext tsvector
 );
 ```
 
@@ -754,7 +775,7 @@ CREATE TABLE bluebox.film (
 [.background-color: #800020]
 [.footer: Slide 48 / 79]
 
-# Step 2: Create Publication
+## Step 2: Create Publication
 
 On the publisher (port 5432):
 
@@ -776,12 +797,12 @@ SELECT * FROM pg_publication_tables;
 [.background-color: #800020]
 [.footer: Slide 49 / 79]
 
-# Step 3: Create Subscription
+## Step 3: Create Subscription
 
 On the subscriber (run from inside the container):
 
 ```bash
-docker exec -it postgres-subscriber psql -U postgres -d bluebox
+psql "postgresql://postgres:training@localhost:5433/bluebox"
 ```
 
 ```sql
@@ -799,7 +820,7 @@ SELECT * FROM pg_stat_subscription;
 [.background-color: #800020]
 [.footer: Slide 50 / 79]
 
-# Step 4: Watch It Replicate!
+## Step 4: Watch It Replicate!
 
 Initial sync happens automatically. Check subscriber:
 
@@ -819,7 +840,7 @@ LIMIT 5;
 [.background-color: #800020]
 [.footer: Slide 51 / 79]
 
-# Step 5: Test Live Replication
+## Step 5: Test Live Replication
 
 On publisher (5432), make a change:
 
@@ -844,7 +865,7 @@ WHERE title = 'The Dark Knight';
 [.background-color: #800020]
 [.footer: Slide 52 / 79]
 
-# Monitor Replication Status
+## Monitor Replication Status
 
 ```sql
 -- On subscriber: check replication lag
@@ -865,7 +886,7 @@ FROM pg_replication_slots;
 [.background-color: #800020]
 [.footer: Slide 53 / 79]
 
-# Clean Up (Optional)
+## Clean Up (Optional)
 
 ```sql
 -- On subscriber: drop subscription
@@ -880,14 +901,14 @@ DROP PUBLICATION film_pub;
 [.background-color: #CC5500]
 [.footer: Slide 54 / 79]
 
-# Connection Management
+## Connection Management
 
 ---
 
 [.background-color: #CC5500]
 [.footer: Slide 55 / 79]
 
-# Connection Settings
+## Connection Settings
 
 ```sql
 -- postgresql.conf
@@ -908,7 +929,7 @@ WHERE datname = 'bluebox';
 [.background-color: #CC5500]
 [.footer: Slide 56 / 79]
 
-# The Connection Problem
+## The Connection Problem
 
 Each Postgres connection = 1 process
 
@@ -933,7 +954,7 @@ ORDER BY state_change;
 [.background-color: #CC5500]
 [.footer: Slide 57 / 79]
 
-# PgBouncer - Connection Pooler
+## PgBouncer - Connection Pooler
 
 PgBouncer sits between your app and PostgreSQL:
 
@@ -950,7 +971,7 @@ App (1000 connections) → PgBouncer → PostgreSQL (20 connections)
 [.background-color: #CC5500]
 [.footer: Slide 58 / 79]
 
-# 🔧 Hands-On: PgBouncer
+## 🔧 Hands-On: PgBouncer
 
 First, enable the DBA profile if you haven't:
 
@@ -959,10 +980,10 @@ docker compose --profile dba up -d
 ```
 
 ```bash
-# Verify PgBouncer is running
+## Verify PgBouncer is running
 docker ps | grep pgbouncer
 
-# Should show: pgbouncer-training on port 6432
+## Should show: pgbouncer-training on port 6432
 ```
 
 ---
@@ -970,7 +991,7 @@ docker ps | grep pgbouncer
 [.background-color: #CC5500]
 [.footer: Slide 59 / 79]
 
-# Pool Modes
+## Pool Modes
 
 | Mode | Description | Use Case |
 |------|-------------|----------|
@@ -985,13 +1006,13 @@ Our Docker setup uses **transaction** mode (most common).
 [.background-color: #CC5500]
 [.footer: Slide 60 / 79]
 
-# Connect Through PgBouncer
+## Connect Through PgBouncer
 
 ```bash
-# Direct to PostgreSQL (port 5432)
+## Direct to PostgreSQL (port 5432)
 psql "postgresql://postgres:training@localhost:5432/bluebox"
 
-# Through PgBouncer (port 6432)
+## Through PgBouncer (port 6432)
 psql "postgresql://postgres:training@localhost:6432/bluebox"
 ```
 
@@ -1002,12 +1023,12 @@ Both connections work the same - but PgBouncer pools them!
 [.background-color: #CC5500]
 [.footer: Slide 61 / 79]
 
-# PgBouncer Admin Console
+## PgBouncer Admin Console
 
 PgBouncer has a special admin database for monitoring:
 
 ```bash
-# Connect to PgBouncer admin (use pgbouncer as database name)
+## Connect to PgBouncer admin (use pgbouncer as database name)
 psql "postgresql://postgres:training@localhost:6432/pgbouncer"
 ```
 
@@ -1021,7 +1042,7 @@ SHOW HELP;
 [.background-color: #CC5500]
 [.footer: Slide 62 / 79]
 
-# Monitor Pool Statistics
+## Monitor Pool Statistics
 
 ```sql
 -- From PgBouncer admin console
@@ -1042,14 +1063,14 @@ SHOW POOLS;
 [.background-color: #556B2F]
 [.footer: Slide 63 / 79]
 
-# Disk, Storage, and Vacuum
+## Disk, Storage, and Vacuum
 
 ---
 
 [.background-color: #556B2F]
 [.footer: Slide 64 / 79]
 
-# MVCC - Multi-Version Concurrency Control
+## MVCC - Multi-Version Concurrency Control
 
 PostgreSQL keeps old row versions for:
 
@@ -1064,7 +1085,7 @@ PostgreSQL keeps old row versions for:
 [.background-color: #556B2F]
 [.footer: Slide 65 / 79]
 
-# What is Vacuum?
+## What is Vacuum?
 
 VACUUM reclaims space from dead rows
 
@@ -1084,7 +1105,7 @@ VACUUM FULL bluebox.rental;
 [.background-color: #556B2F]
 [.footer: Slide 66 / 79]
 
-# Autovacuum
+## Autovacuum
 
 Postgres automatically vacuums tables
 
@@ -1102,7 +1123,7 @@ autovacuum_vacuum_scale_factor = 0.2
 [.background-color: #556B2F]
 [.footer: Slide 67 / 79]
 
-# Monitoring Table Bloat
+## Monitoring Table Bloat
 
 ```sql
 -- Check dead tuples
@@ -1123,7 +1144,7 @@ LIMIT 10;
 [.background-color: #556B2F]
 [.footer: Slide 68 / 79]
 
-# Table and Index Bloat
+## Table and Index Bloat
 
 ```sql
 -- pg_bloat_check or pgstattuple extension
@@ -1142,7 +1163,7 @@ Tools for bloat analysis:
 [.background-color: #556B2F]
 [.footer: Slide 69 / 79]
 
-# Disk Space Monitoring
+## Disk Space Monitoring
 
 ```sql
 SELECT pg_size_pretty(pg_database_size('bluebox'));
@@ -1168,14 +1189,14 @@ ORDER BY pg_total_relation_size(relid) DESC LIMIT 5;
 [.background-color: #4B0082]
 [.footer: Slide 70 / 79]
 
-# Table Partitioning
+## Table Partitioning
 
 ---
 
 [.background-color: #4B0082]
 [.footer: Slide 71 / 79]
 
-# What is Partitioning?
+## What is Partitioning?
 
 Breaking a large table into smaller physical pieces
 
@@ -1193,7 +1214,7 @@ PostgreSQL automatically routes queries/inserts to the right partition.
 [.background-color: #4B0082]
 [.footer: Slide 72 / 79]
 
-# Why Partition?
+## Why Partition?
 
 - **Query performance**: Scans only relevant partitions (partition pruning)
 - **Data management**: DROP old partitions instead of DELETE
@@ -1207,7 +1228,7 @@ Best for: Large tables (100M+ rows), time-series data, archival needs
 [.background-color: #4B0082]
 [.footer: Slide 73 / 79]
 
-# Partition Types
+## Partition Types
 
 | Type | Use Case | Example |
 |------|----------|---------|
@@ -1220,7 +1241,7 @@ Best for: Large tables (100M+ rows), time-series data, archival needs
 [.background-color: #4B0082]
 [.footer: Slide 74 / 79]
 
-# 🔧 Hands-On: Range Partitioning
+## 🔧 Hands-On: Range Partitioning
 
 ```sql
 -- Create partitioned table
@@ -1244,7 +1265,7 @@ CREATE TABLE payment_2025 PARTITION OF bluebox.payment_history
 [.background-color: #4B0082]
 [.footer: Slide 75 / 79]
 
-# Insert & Query Partitioned Tables
+## Insert & Query Partitioned Tables
 
 ```sql
 -- Insert goes to correct partition automatically
@@ -1262,7 +1283,7 @@ WHERE payment_date >= '2025-01-01';
 [.background-color: #4B0082]
 [.footer: Slide 76 / 79]
 
-# Managing Partitions
+## Managing Partitions
 
 ```sql
 -- Add a new partition (before data arrives!)
@@ -1280,7 +1301,7 @@ DROP TABLE payment_2024;  -- or archive to cold storage
 [.background-color: #4B0082]
 [.footer: Slide 77 / 79]
 
-# Partitioning Tips
+## Partitioning Tips
 
 - Add partitions **before** you need them (or use DEFAULT)
 - Partition key must be in PRIMARY KEY
@@ -1293,7 +1314,7 @@ DROP TABLE payment_2024;  -- or archive to cold storage
 [.background-color: #336791]
 [.footer: Slide 78 / 79]
 
-# Hour 3 Summary
+## Hour 3 Summary
 
 - ✅ Hosting options: self-managed vs managed
 - ✅ Backup strategies: pg_dump, basebackup, tools
@@ -1311,7 +1332,7 @@ DROP TABLE payment_2024;  -- or archive to cold storage
 [.background-color: #336791]
 [.footer: Slide 79 / 79]
 
-# Questions?
+## Questions?
 
 <br>
 <br>
