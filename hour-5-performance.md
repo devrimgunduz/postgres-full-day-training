@@ -3,10 +3,10 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 1 / 52]
 
-# Postgres Configuration and Performance Tuning
+## Postgres Configuration and Performance Tuning
 <br>
 <br>
-## Hour 5 of PostgreSQL Training Day
+### Hour 5 of PostgreSQL Training Day
 ### SCaLE LA 2026
 
 ---
@@ -14,7 +14,7 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 2 / 52]
 
-# Hour 5 Topics
+## Hour 5 Topics
 
 [.column]
 
@@ -39,14 +39,12 @@ autoscale: true
 [.background-color: #2F4F4F]
 [.footer: Slide 3 / 52]
 
-# Postgres Architecture
+## Postgres Architecture
 
 ---
 
 [.background-color: #2F4F4F]
 [.footer: Slide 4 / 52]
-
-# How Postgres Processes Data
 
 ![inline](diagrams/pg data 1.png)
 
@@ -55,7 +53,7 @@ autoscale: true
 [.background-color: #2F4F4F]
 [.footer: Slide 5 / 52]
 
-# Memory Architecture
+#### Memory Architecture
 
 ![inline](diagrams/pg data 2.png)
 
@@ -64,7 +62,7 @@ autoscale: true
 [.background-color: #2F4F4F]
 [.footer: Slide 6 / 52]
 
-# i/o
+## i/o
 
 ![inline](diagrams/pg data 3.png)
 
@@ -73,7 +71,7 @@ autoscale: true
 [.background-color: #2F4F4F]
 [.footer: Slide 7 / 52]
 
-# Background Processes
+## Background Processes
 
 | Process | Function |
 |---------|----------|
@@ -89,7 +87,7 @@ autoscale: true
 [.background-color: #8B4513]
 [.footer: Slide 8 / 52]
 
-# Memory Configuration
+## Memory Configuration
 
 ![inline](diagrams/shared buffers.png)
 
@@ -98,7 +96,7 @@ autoscale: true
 [.background-color: #8B4513]
 [.footer: Slide 9 / 52]
 
-# Shared Buffers
+## Shared Buffers
 
 The database page cache - most important setting
 
@@ -119,7 +117,7 @@ shared_buffers = 8GB   -- For 32GB RAM system
 [.background-color: #8B4513]
 [.footer: Slide 10 / 52]
 
-# Shared Buffers Guidelines
+## Shared Buffers Guidelines
 
 | System RAM | shared_buffers |
 |------------|----------------|
@@ -135,7 +133,7 @@ Beyond 32GB, diminishing returns - OS cache helps too
 [.background-color: #8B4513]
 [.footer: Slide 11 / 52]
 
-# Effective Cache Size
+## Effective Cache Size
 
 Tells the planner how much memory is available for caching
 
@@ -153,7 +151,7 @@ This is just a hint - doesn't allocate memory
 [.background-color: #8B4513]
 [.footer: Slide 12 / 52]
 
-# Cache Hit Ratio
+## Cache Hit Ratio
 
 ```sql
 SELECT datname, blks_hit, blks_read,
@@ -175,7 +173,7 @@ Target: **> 99%** for OLTP workloads ✓
 [.background-color: #8B4513]
 [.footer: Slide 13 / 52]
 
-# What's in the Buffer Cache?
+## What's in the Buffer Cache?
 
 ```sql
 -- Install pg_buffercache extension
@@ -199,14 +197,14 @@ LIMIT 10;
 [.background-color: #006400]
 [.footer: Slide 14 / 52]
 
-# Work Memory
+## Work Memory
 
 ---
 
 [.background-color: #006400]
 [.footer: Slide 15 / 52]
 
-# What is work_mem?
+## What is work_mem?
 
 Memory for query operations:
 
@@ -224,7 +222,7 @@ SHOW work_mem;  -- Default: 4MB
 [.background-color: #006400]
 [.footer: Slide 16 / 52]
 
-# work_mem Behavior
+## work_mem Behavior
 
 Each operation can use up to work_mem
 
@@ -243,7 +241,7 @@ ORDER BY appearances DESC;                    -- sort
 [.background-color: #006400]
 [.footer: Slide 17 / 52]
 
-# Setting work_mem
+## Setting work_mem
 
 **Be careful**: work_mem × connections × operations
 
@@ -262,7 +260,7 @@ RESET work_mem;
 [.background-color: #006400]
 [.footer: Slide 18 / 52]
 
-# When to Increase work_mem
+## When to Increase work_mem
 
 Signs you need more:
 
@@ -280,7 +278,7 @@ EXPLAIN (ANALYZE, BUFFERS) SELECT ...
 [.background-color: #006400]
 [.footer: Slide 19 / 52]
 
-# Maintenance Work Memory
+## Maintenance Work Memory
 
 Used by maintenance operations:
 
@@ -300,7 +298,7 @@ Can be set much higher than work_mem
 [.background-color: #191970]
 [.footer: Slide 20 / 52]
 
-# Checkpoints
+## Checkpoints
 
 [.column]
 
@@ -322,7 +320,7 @@ checkpoint_completion_target = 0.9
 [.background-color: #191970]
 [.footer: Slide 21 / 52]
 
-# Checkpoint Tuning
+## Checkpoint Tuning
 
 ```
 More frequent checkpoints:
@@ -342,7 +340,7 @@ Less frequent checkpoints:
 [.background-color: #191970]
 [.footer: Slide 22 / 52]
 
-# Sequential vs Random I/O Costs
+## Sequential vs Random I/O Costs
 
 ```sql
 -- Tells planner relative costs
@@ -358,7 +356,7 @@ random_page_cost = 1.1   -- SSDs have nearly equal random/sequential
 [.background-color: #191970]
 [.footer: Slide 23 / 52]
 
-# Parallel Query Execution
+## Parallel Query Execution
 
 Postgres can use multiple CPU cores for a single query:
 
@@ -372,7 +370,7 @@ Postgres can use multiple CPU cores for a single query:
 [.background-color: #191970]
 [.footer: Slide 24 / 52]
 
-# Parallel Query Defaults
+## Parallel Query Defaults
 
 ```sql
 -- Check current settings
@@ -390,7 +388,7 @@ Parallel kicks in for larger tables automatically.
 [.background-color: #191970]
 [.footer: Slide 25 / 52]
 
-# Increasing Parallel Workers
+## Increasing Parallel Workers
 
 ```sql
 -- Allow more workers per query (requires restart for max_worker_processes)
@@ -411,7 +409,7 @@ SELECT pg_reload_conf();
 [.background-color: #191970]
 [.footer: Slide 26 / 52]
 
-# Parallel Query in EXPLAIN
+## Parallel Query in EXPLAIN
 
 ```sql
 EXPLAIN ANALYZE SELECT count(*) FROM bluebox.film;
@@ -433,7 +431,7 @@ Finalize Aggregate
 [.background-color: #8B4513]
 [.footer: Slide 27 / 52]
 
-# Memory Settings Summary
+## Memory Settings Summary
 
 | Setting | Purpose | Typical Value |
 |---------|---------|---------------|
@@ -447,14 +445,14 @@ Finalize Aggregate
 [.background-color: #4B0082]
 [.footer: Slide 28 / 52]
 
-# Vacuum and Autovacuum
+## Vacuum and Autovacuum
 
 ---
 
 [.background-color: #4B0082]
 [.footer: Slide 29 / 52]
 
-# Why Does Postgres Need Vacuum?
+## Why Does Postgres Need Vacuum?
 
 Postgres uses **MVCC** (Multi-Version Concurrency Control):
 
@@ -469,7 +467,7 @@ Vacuum reclaims this space for reuse.
 [.background-color: #4B0082]
 [.footer: Slide 30 / 52]
 
-# Autovacuum: The Robot Cleaner
+## Autovacuum: The Robot Cleaner
 
 Autovacuum has been on by default since Postgres 8.3 (2008).
 
@@ -488,7 +486,7 @@ For a 1,000 row table → vacuum at ~250 dead rows
 [.background-color: #4B0082]
 [.footer: Slide 31 / 52]
 
-# Do You Need to Tune Autovacuum?
+## Do You Need to Tune Autovacuum?
 
 **Usually no!** Defaults work for most workloads. But lots of dead rows can affect performance.
 
@@ -504,7 +502,7 @@ Consider tuning if you see:
 [.background-color: #4B0082]
 [.footer: Slide 32 / 52]
 
-# Check Dead Tuples Waiting for Cleanup
+## Check Dead Tuples Waiting for Cleanup
 
 ```sql
 SELECT 
@@ -523,7 +521,7 @@ LIMIT 10;
 [.background-color: #4B0082]
 [.footer: Slide 33 / 52]
 
-# Tuning: Scale Factor
+## Tuning: Scale Factor
 
 For large tables, 20% is too long to wait.
 
@@ -544,7 +542,7 @@ SET (autovacuum_vacuum_threshold = 1000000);
 [.background-color: #4B0082]
 [.footer: Slide 34 / 52]
 
-# Tuning: Cost-Based Throttling
+## Tuning: Cost-Based Throttling
 
 If vacuum is causing I/O pressure, slow it down:
 
@@ -563,7 +561,7 @@ SET (autovacuum_vacuum_cost_limit = 100);
 [.background-color: #4B0082]
 [.footer: Slide 35 / 52]
 
-# Transaction ID Wraparound
+## Transaction ID Wraparound
 
 Postgres uses 32-bit transaction IDs (~2 billion).
 
@@ -585,7 +583,7 @@ Stay well under 2 billion.
 [.background-color: #4B0082]
 [.footer: Slide 36 / 52]
 
-# Vacuum Summary
+## Vacuum Summary
 
 | Setting | When to Tune |
 |---------|--------------|
@@ -600,14 +598,14 @@ Stay well under 2 billion.
 [.background-color: #800020]
 [.footer: Slide 37 / 52]
 
-# Scaling Reads and Writes
+## Scaling Reads and Writes
 
 ---
 
 [.background-color: #800020]
 [.footer: Slide 38 / 52]
 
-# Scaling Strategies
+## Scaling Strategies
 
 [.column]
 
@@ -630,7 +628,7 @@ Stay well under 2 billion.
 [.background-color: #800020]
 [.footer: Slide 39 / 52]
 
-# Read Scaling with Replicas
+## Read Scaling with Replicas
 
 ![inline](diagrams/read replicas.png)
 
@@ -639,7 +637,7 @@ Stay well under 2 billion.
 [.background-color: #800020]
 [.footer: Slide 40 / 52]
 
-# Connection Pooling
+## Connection Pooling
 
 ![inline](diagrams/connection pooling.png)
 
@@ -650,7 +648,7 @@ Reduces connection overhead dramatically
 [.background-color: #800020]
 [.footer: Slide 41 / 52]
 
-# Table Partitioning
+## Table Partitioning
 
 Break large tables into smaller pieces
 
@@ -675,7 +673,7 @@ CREATE TABLE payment_2025 PARTITION OF bluebox.payment_partitioned
 [.background-color: #800020]
 [.footer: Slide 42 / 52]
 
-# Partitioning Benefits
+## Partitioning Benefits
 
 - Faster queries with partition pruning
 - Easier data archival (DROP old partitions)
@@ -688,7 +686,7 @@ CREATE TABLE payment_2025 PARTITION OF bluebox.payment_partitioned
 [.background-color: #800020]
 [.footer: Slide 43 / 52]
 
-# Write Scaling Challenges
+## Write Scaling Challenges
 
 PostgreSQL is single-writer by design
 
@@ -703,14 +701,14 @@ Options:
 [.background-color: #CC5500]
 [.footer: Slide 44 / 52]
 
-# Configuration Management
+## Configuration Management
 
 ---
 
 [.background-color: #CC5500]
 [.footer: Slide 45 / 52]
 
-# Where Settings Live
+## Where Settings Live
 
 ```sql
 -- Show config file locations
@@ -724,7 +722,7 @@ SHOW data_directory;  -- Data directory
 [.background-color: #CC5500]
 [.footer: Slide 46 / 52]
 
-# Changing Settings
+## Changing Settings
 
 ```sql
 SELECT name, setting, unit, context
@@ -747,7 +745,7 @@ FROM pg_settings WHERE name IN
 [.background-color: #CC5500]
 [.footer: Slide 47 / 52]
 
-# Applying Changes
+## Applying Changes
 
 ```sql
 -- Reload configuration (no downtime)
@@ -767,7 +765,7 @@ WHERE pending_restart;
 [.background-color: #CC5500]
 [.footer: Slide 48 / 52]
 
-# ALTER SYSTEM
+## ALTER SYSTEM
 
 ```sql
 -- Modify settings without editing file
@@ -786,7 +784,7 @@ ALTER SYSTEM RESET work_mem;
 [.background-color: #CC5500]
 [.footer: Slide 49 / 52]
 
-# Starting Point Configuration
+## Starting Point Configuration
 
 ```sql
 -- For a dedicated 32GB database server:
@@ -809,7 +807,7 @@ effective_io_concurrency = 200 -- SSD
 [.background-color: #CC5500]
 [.footer: Slide 50 / 52]
 
-# PGTune
+## PGTune
 
 Online tool for generating starting configurations
 
@@ -828,7 +826,7 @@ Input:
 [.background-color: #336791]
 [.footer: Slide 51 / 52]
 
-# Hour 5 Summary
+## Hour 5 Summary
 
 - ✅ Postgres architecture and processes
 - ✅ Memory: shared_buffers, work_mem
@@ -844,7 +842,7 @@ Input:
 [.background-color: #336791]
 [.footer: Slide 52 / 52]
 
-# Questions?
+## Questions?
 
 <br>
 <br>

@@ -3,10 +3,10 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 1 / 52]
 
-# Postgres Troubleshooting
+## Postgres Troubleshooting
 <br>
 <br>
-## Hour 4 of PostgreSQL Training Day
+### Hour 4 of PostgreSQL Training Day
 ### SCaLE LA 2026
 
 ---
@@ -14,7 +14,7 @@ autoscale: true
 [.background-color: #336791]
 [.footer: Slide 2 / 52]
 
-# Hour 4 Topics
+## Hour 4 Topics
 
 [.column]
 
@@ -38,14 +38,14 @@ autoscale: true
 [.background-color: #2F4F4F]
 [.footer: Slide 3 / 52]
 
-# Postgres Internal Catalogs
+## Postgres Internal Catalogs
 
 ---
 
 [.background-color: #2F4F4F]
 [.footer: Slide 4 / 52]
 
-# The System Catalog
+## The System Catalog
 
 PostgreSQL stores everything as tables - even metadata
 
@@ -58,7 +58,7 @@ PostgreSQL stores everything as tables - even metadata
 [.background-color: #2F4F4F]
 [.footer: Slide 5 / 52]
 
-# Essential System Catalogs
+## Essential System Catalogs
 
 | Catalog | Description |
 |---------|-------------|
@@ -74,7 +74,7 @@ PostgreSQL stores everything as tables - even metadata
 [.background-color: #2F4F4F]
 [.footer: Slide 6 / 52]
 
-# Exploring pg_class
+## Exploring pg_class
 
 ```sql
 SELECT relname, relkind, reltuples::bigint as row_estimate
@@ -100,7 +100,7 @@ WHERE relnamespace = 'bluebox'::regnamespace
 [.background-color: #2F4F4F]
 [.footer: Slide 7 / 52]
 
-# pg_stat_activity - Active Sessions
+## pg_stat_activity - Active Sessions
 
 ```sql
 SELECT 
@@ -122,7 +122,7 @@ WHERE datname = 'bluebox'
 [.background-color: #2F4F4F]
 [.footer: Slide 8 / 52]
 
-# pg_stat_user_tables
+## pg_stat_user_tables
 
 ```sql
 SELECT relname, n_live_tup, n_dead_tup, last_autovacuum
@@ -147,7 +147,7 @@ WHERE schemaname = 'bluebox' ORDER BY n_live_tup DESC LIMIT 5;
 [.background-color: #2F4F4F]
 [.footer: Slide 9 / 52]
 
-# pg_stat_user_indexes
+## pg_stat_user_indexes
 
 ```sql
 SELECT relname, indexrelname, idx_scan,
@@ -174,7 +174,7 @@ Find unused indexes with `WHERE idx_scan = 0`
 [.background-color: #2F4F4F]
 [.footer: Slide 10 / 52]
 
-# pg_locks - Lock Information
+## pg_locks - Lock Information
 
 ```sql
 SELECT 
@@ -201,7 +201,7 @@ WHERE NOT l.granted;  -- Waiting locks
 [.background-color: #2F4F4F]
 [.footer: Slide 12 / 52]
 
-# Find the Source of a Lock
+## Find the Source of a Lock
 
 ```sql
 WITH sos AS (
@@ -231,14 +231,14 @@ ORDER BY lock_depth;
 [.background-color: #8B4513]
 [.footer: Slide 13 / 52]
 
-# Logging
+## Logging
 
 ---
 
 [.background-color: #8B4513]
 [.footer: Slide 14 / 52]
 
-# Why Logging Matters
+## Why Logging Matters
 
 - Debugging application issues
 - Security auditing
@@ -253,7 +253,7 @@ Logs are like insurance - you may not need them every day, but when you have a p
 [.background-color: #8B4513]
 [.footer: Slide 15 / 52]
 
-# Check Current Settings
+## Check Current Settings
 
 ```sql
 -- See what's currently configured
@@ -272,7 +272,7 @@ Let's enable file-based logging!
 [.background-color: #8B4513]
 [.footer: Slide 16 / 52]
 
-# Enable Logging Collector
+## Enable Logging Collector
 
 ```sql
 -- Enable the logging collector (writes to files)
@@ -290,7 +290,7 @@ ALTER SYSTEM SET log_filename = 'postgresql.log';
 [.background-color: #8B4513]
 [.footer: Slide 17 / 52]
 
-# Restart Container
+## Restart Container
 
 Restart the container to enable the logging collector:
 
@@ -306,7 +306,7 @@ This restarts PostgreSQL with logging enabled, writing to `logs/postgresql.log`.
 [.background-color: #8B4513]
 [.footer: Slide 18 / 52]
 
-# Start Tailing Logs
+## Start Tailing Logs
 
 Open a **second terminal** and tail the log:
 
@@ -322,7 +322,7 @@ Keep this running! You'll see log entries appear in real-time as we make changes
 [.background-color: #8B4513]
 [.footer: Slide 19 / 52]
 
-# Log Severity Levels
+## Log Severity Levels
 
 Control what gets logged with `log_min_messages`:
 
@@ -345,7 +345,7 @@ SHOW log_min_messages;
 [.background-color: #8B4513]
 [.footer: Slide 20 / 52]
 
-# Log SQL Statements
+## Log SQL Statements
 
 `log_statement` controls which SQL statements are logged:
 
@@ -370,7 +370,7 @@ SELECT title FROM bluebox.film LIMIT 3;
 [.background-color: #8B4513]
 [.footer: Slide 21 / 52]
 
-# See It in the Log
+## See It in the Log
 
 Your tail window should show:
 
@@ -390,7 +390,7 @@ SELECT pg_reload_conf();
 [.background-color: #8B4513]
 [.footer: Slide 22 / 52]
 
-# Log DDL Changes
+## Log DDL Changes
 
 With `log_statement = 'ddl'`, only schema changes are logged:
 
@@ -412,7 +412,7 @@ Check your tail window - only CREATE and DROP appear!
 [.background-color: #8B4513]
 [.footer: Slide 23 / 52]
 
-# Log Slow Queries
+## Log Slow Queries
 
 `log_min_duration_statement` logs queries that exceed a time threshold.
 
@@ -437,7 +437,7 @@ SELECT pg_sleep(0.2);
 [.background-color: #8B4513]
 [.footer: Slide 24 / 52]
 
-# Log SQL Errors
+## Log SQL Errors
 
 `log_min_error_statement` logs the SQL that caused an error.
 
@@ -464,7 +464,7 @@ STATEMENT:  SELECT * FROM bluebox.nonexistent_table;
 [.background-color: #8B4513]
 [.footer: Slide 25 / 52]
 
-# Log Line Prefix
+## Log Line Prefix
 
 [.column]
 
@@ -493,7 +493,7 @@ SELECT pg_reload_conf();
 [.background-color: #8B4513]
 [.footer: Slide 26 / 52]
 
-# Log Lock Waits
+## Log Lock Waits
 
 `log_lock_waits` logs when queries wait for locks longer than `deadlock_timeout` (default 1s).
 
@@ -508,7 +508,7 @@ SELECT pg_reload_conf();
 [.background-color: #8B4513]
 [.footer: Slide 27 / 52]
 
-# Simulate a Lock Wait
+## Simulate a Lock Wait
 
 **Terminal 1** - Start a transaction and hold a lock:
 
@@ -533,7 +533,7 @@ Wait 1+ seconds, then check your log tail! Then `COMMIT;` in Terminal 1.
 [.background-color: #8B4513]
 [.footer: Slide 28 / 52]
 
-# pgAudit: Detailed Audit Logging
+## pgAudit: Detailed Audit Logging
 
 For compliance requirements (SOC2, HIPAA, etc.):
 
@@ -551,7 +551,7 @@ SELECT pg_reload_conf();
 [.background-color: #8B4513]
 [.footer: Slide 29 / 52]
 
-# pgAudit: Example Output
+## pgAudit: Example Output
 
 Run a DDL command:
 
@@ -576,14 +576,14 @@ Shows: audit type, statement ID, object type, object name, full SQL.
 [.background-color: #006400]
 [.footer: Slide 30 / 52]
 
-# Finding and Killing Problems
+## Finding and Killing Problems
 
 ---
 
 [.background-color: #006400]
 [.footer: Slide 31 / 52]
 
-# Common Problems
+## Common Problems
 
 - Long-running queries blocking others
 - Idle transactions holding locks
@@ -596,7 +596,7 @@ Shows: audit type, statement ID, object type, object name, full SQL.
 [.background-color: #006400]
 [.footer: Slide 32 / 52]
 
-# Finding Long-Running Queries
+## Finding Long-Running Queries
 
 ```sql
 SELECT 
@@ -616,7 +616,7 @@ LIMIT 10;
 [.background-color: #006400]
 [.footer: Slide 33 / 52]
 
-# Finding Idle Transactions
+## Finding Idle Transactions
 
 ```sql
 -- Idle transactions can hold locks!
@@ -637,7 +637,7 @@ ORDER BY xact_start;
 [.background-color: #006400]
 [.footer: Slide 34 / 52]
 
-# Finding Blocked Queries
+## Finding Blocked Queries
 
 ```sql
 SELECT 
@@ -659,7 +659,7 @@ WHERE NOT blocked_locks.granted;
 [.background-color: #006400]
 [.footer: Slide 35 / 52]
 
-# Canceling a Query
+## Canceling a Query
 
 ```sql
 -- Cancel the current query (graceful)
@@ -675,7 +675,7 @@ The query receives an interrupt and can clean up
 [.background-color: #006400]
 [.footer: Slide 36 / 52]
 
-# Terminating a Connection
+## Terminating a Connection
 
 ```sql
 -- Terminate the entire connection (forceful)
@@ -693,7 +693,7 @@ WHERE datname = 'bluebox'
 [.background-color: #006400]
 [.footer: Slide 37 / 52]
 
-# Statement Timeout
+## Statement Timeout
 
 Automatically kill queries that run too long
 
@@ -716,7 +716,7 @@ ALTER ROLE app_user SET statement_timeout = '60s';
 [.background-color: #006400]
 [.footer: Slide 38 / 52]
 
-# Idle Transaction Timeout
+## Idle Transaction Timeout
 
 Kill sessions that sit idle in a transaction
 
@@ -733,7 +733,7 @@ ALTER ROLE app_user SET idle_in_transaction_session_timeout = '5min';
 [.background-color: #006400]
 [.footer: Slide 39 / 52]
 
-# Lock Timeout
+## Lock Timeout
 
 Don't wait forever for locks
 
@@ -752,7 +752,7 @@ ALTER TABLE bluebox.rental ADD COLUMN new_col INT;
 [.background-color: #191970]
 [.footer: Slide 40 / 52]
 
-# Monitor Postgres
+## Monitor Postgres
 
 - Catch problems before users notice
 - Capacity planning
@@ -765,7 +765,7 @@ ALTER TABLE bluebox.rental ADD COLUMN new_col INT;
 [.background-color: #191970]
 [.footer: Slide 41 / 52]
 
-# What to Monitor
+## What to Monitor
 
 [.column]
 
@@ -790,7 +790,7 @@ ALTER TABLE bluebox.rental ADD COLUMN new_col INT;
 [.background-color: #191970]
 [.footer: Slide 42 / 52]
 
-# Key Metrics to Watch
+## Key Metrics to Watch
 
 ```sql
 -- Connection count
@@ -800,7 +800,8 @@ SELECT count(*) FROM pg_stat_activity;
 SELECT pg_database_size('bluebox');
 
 -- Transaction rate (per second)
-SELECT (xact_commit + xact_rollback) / extract(epoch from now() -  coalesce(stats_reset, (pg_catalog.pg_stat_file('base/' || datid || '/PG_VERSION')).modification)) AS tps
+SELECT (xact_commit + xact_rollback) / extract(epoch from now() -  coalesce(stats_reset, 
+(pg_catalog.pg_stat_file('base/' || datid || '/PG_VERSION')).modification)) AS tps
 FROM pg_stat_database 
 WHERE datname = 'bluebox';
 ```
@@ -810,7 +811,7 @@ WHERE datname = 'bluebox';
 [.background-color: #191970]
 [.footer: Slide 43 / 52]
 
-# Cache Hit Ratio
+## Cache Hit Ratio
 
 ```sql
 SELECT 
@@ -830,7 +831,7 @@ WHERE datname = 'bluebox';
 [.background-color: #191970]
 [.footer: Slide 44 / 52]
 
-# Monitoring Tools
+## Monitoring Tools
 
 | Open Source | Commercial |
 |-------------|------------|
@@ -845,7 +846,7 @@ WHERE datname = 'bluebox';
 [.background-color: #191970]
 [.footer: Slide 45 / 52]
 
-# Simple Health Check Query
+## Simple Health Check Query
 
 ```sql
 SELECT 
@@ -874,14 +875,14 @@ FROM pg_stat_activity;
 [.background-color: #800020]
 [.footer: Slide 46 / 52]
 
-# Getting Help from the Community
+## Getting Help from the Community
 
 ---
 
 [.background-color: #800020]
 [.footer: Slide 47 / 52]
 
-# PostgreSQL Community Resources
+## PostgreSQL Community Resources
 
 - **Documentation** - postgresql.org/docs
 - **Mailing Lists** - pgsql-general, pgsql-performance
@@ -894,7 +895,7 @@ FROM pg_stat_activity;
 [.background-color: #800020]
 [.footer: Slide 48 / 52]
 
-# Before Asking for Help
+## Before Asking for Help
 
 Gather this information:
 
@@ -910,7 +911,7 @@ Gather this information:
 [.background-color: #800020]
 [.footer: Slide 49 / 52]
 
-# Good Question Example
+## Good Question Example
 
 > **PostgreSQL 17.1 on Ubuntu 24.04**
 >
@@ -927,7 +928,7 @@ Gather this information:
 [.background-color: #800020]
 [.footer: Slide 50 / 52]
 
-# Other Resources
+## Other Resources
 
 - **Planet PostgreSQL** - blogs.postgresql.org
 - **Cooper Press Postgres Weekly** - weekly newsletter
@@ -940,7 +941,7 @@ Gather this information:
 [.background-color: #336791]
 [.footer: Slide 51 / 52]
 
-# Hour 4 Summary
+## Hour 4 Summary
 
 - ✅ System catalogs for metadata queries
 - ✅ Logging: severity levels, slow queries, locks
@@ -955,7 +956,7 @@ Gather this information:
 [.background-color: #336791]
 [.footer: Slide 52 / 52]
 
-# Questions?
+## Questions?
 
 <br>
 <br>

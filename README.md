@@ -87,8 +87,9 @@ Slides are written in Markdown for [Deckset](https://www.deckset.com/) (macOS) o
 ├── hour-6-query-tuning.md    # Slides: Query optimization
 ├── docker-compose.yml        # Docker configuration
 ├── diagrams/                 # Images and diagrams
+├── slides/                   # PDF versions of the markdown
 ├── dependencies.md           # Software dependencies
-└── add_slide_numbers.py      # Utility script
+└── add_slide_numbers.py      # Utility script to renumber slides if things are added/removed
 ```
 
 ## Running the Training
@@ -138,7 +139,7 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for gui
 
 This training has been presented at:
 
-- SCaLE 22x (2026) - Southern California Linux Expo
+- SCaLE 23x (2026) - Southern California Linux Expo
 
 ---
 
