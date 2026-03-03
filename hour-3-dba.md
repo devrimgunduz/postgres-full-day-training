@@ -145,6 +145,8 @@ autoscale: true
 
 # pg_dump - Logical Backup
 
+Note: must have PG 18 installed for this to work locally
+
 ```bash
 # Dump entire database (using connection string)
 pg_dump postgresql://postgres:training@localhost:5432/bluebox > bluebox.sql
@@ -363,7 +365,7 @@ FROM pg_stat_wal;
 ```bash
 # List WAL files in the container
 docker exec postgres-training ls -la \
-  /var/lib/postgresql/data/pg_wal/
+  /var/lib/postgresql/18/docker/pg_wal/
 ```
 
 ---
@@ -740,12 +742,32 @@ CREATE DATABASE bluebox;
 \c bluebox
 CREATE SCHEMA bluebox;
 
+-- Create custom mpaa_rating type
+CREATE TYPE mpaa_rating AS ENUM (
+    'G',
+    'PG',
+    'PG-13',
+    'R',
+    'NC-17',
+    'NR'
+);
+
 -- Create the table structure (no data)
 CREATE TABLE bluebox.film (
-    film_id integer PRIMARY KEY,
+    film_id bigint primary key,
     title text,
+    overview text,
     release_date date,
-    vote_average real
+    genre_ids integer[],
+    original_language text,
+    rating mpaa_rating,
+    popularity real,
+    vote_count integer,
+    vote_average real,
+    budget bigint,
+    revenue bigint,
+    runtime integer,
+    fulltext tsvector
 );
 ```
 
@@ -781,7 +803,7 @@ SELECT * FROM pg_publication_tables;
 On the subscriber (run from inside the container):
 
 ```bash
-docker exec -it postgres-subscriber psql -U postgres -d bluebox
+psql "postgresql://postgres:training@localhost:5433/bluebox"
 ```
 
 ```sql
