@@ -79,7 +79,8 @@ autoscale: true
 | WAL Writer | Flushes WAL to disk |
 | Checkpointer | Periodic full sync |
 | Autovacuum | Cleans dead rows |
-| Stats Collector | Gathers statistics |
+| Logger | Gathers logs |
+| I/O worker | async I/O helper process |
 | Archiver | Archives WAL files |
 
 ---
