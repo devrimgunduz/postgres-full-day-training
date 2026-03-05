@@ -48,7 +48,7 @@ autoscale: true
 
 All slides, exercises, and Docker setup:
 
-**github.com/Snowflake-Labs/postgres-full-day-training**
+**github.com/elizabeth-christensen/postgres-full-day-training**
 
 Sample database:
 

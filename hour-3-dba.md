@@ -32,7 +32,7 @@ autoscale: true
 
 **Training Materials**
 
-**github.com/Snowflake-Labs/postgres-full-day-training**
+**github.com/elizabeth-christensen/postgres-full-day-training**
 
 ![inline 50%](diagrams/qr-code.png)
 

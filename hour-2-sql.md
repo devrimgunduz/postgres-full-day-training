@@ -30,7 +30,7 @@ autoscale: true
 
 **Training Materials**
 
-**github.com/Snowflake-Labs/postgres-full-day-training**
+**github.com/elizabeth-christensen/postgres-full-day-training**
 
 ![inline 50%](diagrams/qr-code.png)
 
@@ -469,7 +469,7 @@ FULL OUTER JOIN (SELECT DISTINCT person_id FROM bluebox.film_crew) fcr
 JOIN bluebox.person p 
     ON p.person_id = COALESCE(fc.person_id, fcr.person_id)
 ORDER BY p.name
-LIMIT 5;
+;
 ```
 
 ---
